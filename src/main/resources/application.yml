@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    active: jypght
+  datasource:
+    url: jdbc:mysql://47.104.4.114:3306/jypght
+    username: jypght
+    password: laoma_2019
