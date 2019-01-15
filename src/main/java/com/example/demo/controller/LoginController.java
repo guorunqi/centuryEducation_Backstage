@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpSession;
 
-/**
- * Created by guorunqi on 2019/1/14.
- */
+
 @Controller
 public class LoginController {
     @Autowired
