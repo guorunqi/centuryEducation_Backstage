@@ -10,14 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+
 
 
 @Controller
 public class LoginController {
     @Autowired
-    private LoginService loginService;
-
+    private LoginService LoginService;
     @GetMapping("/")
     public String index(@SessionAttribute(WebSecurityConfig.SESSION_KEY)String account, Model model){
 
@@ -25,24 +26,31 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String login(){
-        return "login.html";
-    }
-
-    @PostMapping("/loginVerify")
-    public String loginVerify(String username,String password,HttpSession session){
-        User user = new User();
-        user.setName(username);
-        user.setPassword(password);
-
-        boolean verify = loginService.verifyLogin(user);
-        if (verify) {
-            session.setAttribute(WebSecurityConfig.SESSION_KEY, username);
-            return "index";
-        } else {
-            return "redirect:/login";
+    public String login(String username,String password,HttpSession session){
+        System.out.println("aaa");
+        User loginuser=LoginService.loginVerification(username);
+        if(password.equals(loginuser.getPassword())) {
+            session.setAttribute("user", loginuser);
+            return "index.html";
+        }else{
+            return "login.html";
         }
     }
+
+//    @PostMapping("/loginVerify")
+//    public String loginVerify(String username,String password,HttpSession session){
+//        User user = new User();
+//        user.setName(username);
+//        user.setPassword(password);
+//
+//        boolean verify = loginService.verifyLogin(user);
+//        if (verify) {
+//            session.setAttribute(WebSecurityConfig.SESSION_KEY, username);
+//            return "index";
+//        } else {
+//            return "redirect:/login";
+//        }
+//    }
 
     @GetMapping("/logout")
     public String logout(HttpSession session){
