@@ -1,6 +1,9 @@
 package com.example.demo.utils;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -12,23 +15,39 @@ import javax.servlet.http.HttpSession;
 /**
  * Created by guorunqi on 2019/1/14.
  */
-public class WebSecurityConfig {
+@Controller
+@Component
+class LoginInterceptor extends HandlerInterceptorAdapter {
     /**
      * 登录session key
      */
     public final static String SESSION_KEY = "user";
 
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        HttpSession session = request.getSession();
+        if (session.getAttribute(SESSION_KEY) != null)
+            return true;
+
+        // 跳转登录
+        String url = "/login";
+        response.sendRedirect(url);
+        return false;
+    }
+
+
+
     @Bean
     public SecurityInterceptor getSecurityInterceptor() {
         return new SecurityInterceptor();
     }
-
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration addInterceptor = registry.addInterceptor(getSecurityInterceptor());
 
         // 排除配置
         addInterceptor.excludePathPatterns("/error");
         addInterceptor.excludePathPatterns("/login**");
+        System.out.println("===1");
 
         // 拦截配置
         addInterceptor.addPathPatterns("/**");
