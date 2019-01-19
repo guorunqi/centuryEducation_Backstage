@@ -14,13 +14,13 @@ public class LoginService {
     @Resource
     private UserMapper UserMapper;
     public User loginVerification(String username){
-            UserExample example=new UserExample();
-            example.or().andLoginNameEqualTo(username);
-            List<User> users=UserMapper.selectByExample(example);
-            if(users.size()>0){
-                return users.get(0);
-            }else{
-                return null;
-            }
+        UserExample example=new UserExample();
+        example.or().andLoginNameEqualTo(username);
+        List<User> users=UserMapper.selectByExample(example);
+        if(users.size()>0){
+            return users.get(0);
+        }else{
+            return null;
+        }
     }
 }
