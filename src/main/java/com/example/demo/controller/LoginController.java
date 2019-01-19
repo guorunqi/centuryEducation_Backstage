@@ -19,11 +19,11 @@ public class LoginController {
 
     @RequestMapping(value = "/login")
     @ResponseBody
-    public boolean loginVerify(String username,String password){
+    public boolean loginVerify(String username,String password,HttpSession session){
 
         User user = loginService.loginVerification(username);
         if (password.equals(user.getPassword())) {
-            //session.setAttribute(WebSecurityConfig.SESSION_KEY, username);
+            session.setAttribute("user", username);
             return true;
         } else {
             return false;
@@ -32,7 +32,7 @@ public class LoginController {
 
     @GetMapping("/logout")
     public String logout(HttpSession session){
-        //session.removeAttribute(WebSecurityConfig.SESSION_KEY);
+        session.removeAttribute("user");
         return "redirect:/login";
     }
 }
