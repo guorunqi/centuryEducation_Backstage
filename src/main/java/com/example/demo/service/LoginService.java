@@ -1,0 +1,26 @@
+package com.example.demo.service;
+
+import com.example.demo.dao.UserMapper;
+import com.example.demo.domain.User;
+import com.example.demo.domain.UserExample;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+@Service
+public class LoginService {
+    @Resource
+    private UserMapper UserMapper;
+    public User loginVerification(String username){
+            UserExample example=new UserExample();
+            example.or().andLoginNameEqualTo(username);
+            List<User> users=UserMapper.selectByExample(example);
+            if(users.size()>0){
+                return users.get(0);
+            }else{
+                return null;
+            }
+    }
+}
