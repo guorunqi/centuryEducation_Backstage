@@ -1,0 +1,35 @@
+2019-01-10 14:14:24.999  INFO 3440 --- [main] e.d.CenturyEducationBackstageApplication : Starting CenturyEducationBackstageApplication on DESKTOP-1PTSQ5H with PID 3440 (C:\Users\guorunqi\IdeaProjects\centuryEducation_Backstage\target\classes started by guorunqi in C:\Users\guorunqi\IdeaProjects\centuryEducation_Backstage)
+2019-01-10 14:14:25.007  INFO 3440 --- [main] e.d.CenturyEducationBackstageApplication : No active profile set, falling back to default profiles: default
+2019-01-10 14:14:26.315  WARN 3440 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.example.demo]' package. Please check your configuration.
+2019-01-10 14:14:28.012  INFO 3440 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8888 (http)
+2019-01-10 14:14:28.036  INFO 3440 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-01-10 14:14:28.036  INFO 3440 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/9.0.13
+2019-01-10 14:14:28.044  INFO 3440 --- [main] o.a.catalina.core.AprLifecycleListener   : The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Java\jdk8_64\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;G:\app\guorunqi\product\11.2.0\dbhome_1\bin;G:\Windows\oracle11G\app\guorunqi\product\11.2.0\dbhome_1\bin;G:\windows\VM_Work\oracle_client;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;G:\windows\mysql5.5\bin;G:\windows\Maven\apache-maven-3.5.0\bin;C:\TortoiseSVN\bin;C:\WINDOWS\System32\OpenSSH\;C:\sqlite-dll-win64-x64-3230100;G:\01_我的硬盘\项目相关\01_普元\上海vpn\zhx\zhx\OpenVPN\bin;;C:\Git\cmd;C:\Users\guorunqi\AppData\Local\Microsoft\WindowsApps;C:\sqlite-dll-win64-x64-3230100;C:\Java\jdk8_64\bin;C:\Java\jdk8_64\jre\bin;;.]
+2019-01-10 14:14:28.188  INFO 3440 --- [main] o.a.c.c.C.[.[localhost].[/sdsjjypg]      : Initializing Spring embedded WebApplicationContext
+2019-01-10 14:14:28.189  INFO 3440 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 3045 ms
+2019-01-10 14:14:28.554  INFO 3440 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-01-10 14:14:28.666  WARN 3440 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception; nested exception is org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+2019-01-10 14:14:28.667  INFO 3440 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2019-01-10 14:14:28.670  INFO 3440 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2019-01-10 14:14:28.683  INFO 3440 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2019-01-10 14:14:28.690 ERROR 3440 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
