@@ -19,14 +19,14 @@ public class LoginController {
 
     @RequestMapping(value = "/login")
     @ResponseBody
-    public boolean loginVerify(String username,String password,HttpSession session){
+    public String loginVerify(String username,String password,HttpSession session){
 
         User user = loginService.loginVerification(username);
-        if (password.equals(user.getPassword())) {
+        if (user!=null&&password.equals(user.getPassword())) {
             session.setAttribute("user", username);
-            return true;
+            return "true";
         } else {
-            return false;
+            return "false";
         }
     }
 
