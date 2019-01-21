@@ -1,10 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.ControllerReturn;
 import com.example.demo.domain.User;
 import com.example.demo.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -19,15 +19,27 @@ public class LoginController {
 
     @RequestMapping(value = "/login")
     @ResponseBody
-    public String loginVerify(String username,String password,HttpSession session){
-
-        User user = loginService.loginVerification(username);
-        if (user!=null&&password.equals(user.getPassword())) {
-            session.setAttribute("user", username);
-            return "true";
-        } else {
-            return "false";
+    public ControllerReturn loginVerify(String username,String password,HttpSession session){
+        ControllerReturn controllerReturn=new ControllerReturn();
+        try {
+            User user = loginService.loginVerification(username);
+            if (user!=null&&password.equals(user.getPassword())) {
+                session.setAttribute("user", username);
+                controllerReturn.setCode("true");
+                controllerReturn.setData(user);
+                return controllerReturn;
+            } else {
+                controllerReturn.setCode("false");
+                controllerReturn.setMessage("用户名或密码不正确");
+            }
+            return controllerReturn;
+        }catch (Exception e){
+            controllerReturn.setCode("false");
+            controllerReturn.setMessage(e.toString());
+            return controllerReturn;
         }
+
+
     }
 
     @GetMapping("/logout")
