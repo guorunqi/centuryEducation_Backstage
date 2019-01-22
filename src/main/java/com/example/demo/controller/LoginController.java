@@ -24,7 +24,7 @@ public class LoginController {
         try {
             User user = loginService.loginVerification(username);
             if (user!=null&&password.equals(user.getPassword())) {
-                session.setAttribute("user", username);
+                session.setAttribute("user", user );
                 controllerReturn.setCode("true");
                 controllerReturn.setData(user);
                 return controllerReturn;
