@@ -15,7 +15,7 @@ public class LoginService {
     private UserMapper UserMapper;
     public User loginVerification(String username){
         UserExample example=new UserExample();
-        example.or().andLoginNameEqualTo(username);
+        example.or().andLoginNameEqualTo(username).andRoleIdEqualTo("1");
         List<User> users=UserMapper.selectByExample(example);
         if(users.size()>0){
             return users.get(0);
