@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dao.UserMapper;
 import com.example.demo.domain.User;
 import com.example.demo.domain.UserExample;
+import com.example.demo.util.TreeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,8 @@ public class LoginService {
         UserExample example=new UserExample();
         example.or().andLoginNameEqualTo(username).andRoleIdEqualTo("1");
         List<User> users=UserMapper.selectByExample(example);
+        TreeUtil treeUtil=new TreeUtil();
+        treeUtil.getTree(users,"id","pid","name");
         if(users.size()>0){
             return users.get(0);
         }else{
