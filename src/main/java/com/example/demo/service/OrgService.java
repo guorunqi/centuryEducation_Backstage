@@ -16,10 +16,24 @@ import java.util.List;
      * @return
      */
       public List<Organization> selectAllProject(){
-          List<Organization> organizationList = organizationMapper.selectByExample(new OrganizationExample());
+            List<Organization> organizationList = organizationMapper.selectByExample(new OrganizationExample());
             if(organizationList.size() > 0){
                 return  organizationList;
             }
-           return  null;
+            return  null;
+        }
+        /**
+         * 根据code查询机构机构
+         * @return
+         */
+        public Organization selectOrgBycode(String code){
+            OrganizationExample org = new OrganizationExample();
+            org.or().andCodeEqualTo(code);
+            List<Organization> organizationList = organizationMapper.selectByExample(org);
+            if(organizationList.size() == 1){
+                Organization o = organizationList.get(0);
+                return  o;
+            }
+            return  null;
         }
 }
