@@ -67,7 +67,7 @@
         </table>-->
 
         <!-- 业务字典表表 -->
-        <table tableName="dict_entry"
+        <!--<table tableName="dict_entry"
                domainObjectName="DictEntry"
                enableCountByExample="true"
                enableUpdateByExample="true"
@@ -75,6 +75,26 @@
                enableSelectByExample="true"
                selectByExampleQueryId="true">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>-->
+        <!-- 政策文件表 -->
+        <table tableName="policy_document"
+               domainObjectName="PolicyDocument"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
+        <!-- 项目文件关系表 -->
+        <table tableName="project_policy_document"
+               domainObjectName="ProjectPolicyDocument"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="project_id" sqlStatement="JDBC" identity="true"/>
         </table>
         <!-- 文件条目表 -->
         <!--<table tableName="project"
@@ -85,27 +105,6 @@
                enableSelectByExample="true"
                selectByExampleQueryId="true">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-        </table>-->
-
-        <!-- 政策文件表 -->
-        <!--<table tableName="policy_document"
-               domainObjectName="PolicyDocument"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true">
-            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-        </table>-->
-        <!-- 项目文件关系表 -->
-        <!--<table tableName="project_policy_document"
-               domainObjectName="ProjectPolicyDocument"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true">
-            <generatedKey column="project_id" sqlStatement="JDBC" identity="true"/>
         </table>-->
         <!-- 项目专家映射表 -->
         <!--<table tableName="project_expert"
