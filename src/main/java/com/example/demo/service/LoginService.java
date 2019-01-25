@@ -18,8 +18,6 @@ public class LoginService {
         UserExample example=new UserExample();
         example.or().andLoginNameEqualTo(username).andRoleIdEqualTo("1");
         List<User> users=UserMapper.selectByExample(example);
-        TreeUtil treeUtil=new TreeUtil();
-        treeUtil.getTree(users,"id","pid","name");
         if(users.size()>0){
             return users.get(0);
         }else{
