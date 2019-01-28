@@ -77,7 +77,7 @@
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>-->
         <!-- 政策文件表 -->
-        <table tableName="policy_document"
+        <!--<table tableName="policy_document"
                domainObjectName="PolicyDocument"
                enableCountByExample="true"
                enableUpdateByExample="true"
@@ -85,9 +85,9 @@
                enableSelectByExample="true"
                selectByExampleQueryId="true">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-        </table>
+        </table>-->
         <!-- 项目文件关系表 -->
-        <table tableName="project_policy_document"
+        <!--<table tableName="project_policy_document"
                domainObjectName="ProjectPolicyDocument"
                enableCountByExample="true"
                enableUpdateByExample="true"
@@ -95,7 +95,41 @@
                enableSelectByExample="true"
                selectByExampleQueryId="true">
             <generatedKey column="project_id" sqlStatement="JDBC" identity="true"/>
+        </table>-->
+        <!-- 项目机构关系表 -->
+        <!--<table tableName="project_org"
+               domainObjectName="ProjectOrg"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>-->
+        <!-- 项目机构关系表 -->
+        <!--<table tableName="org_user"
+               domainObjectName="OrgUser"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="org_id" sqlStatement="JDBC" identity="true"/>
+        </table>-->
+        <!-- 项目机构关系表 -->
+        <table tableName="project_org_user"
+               domainObjectName="ProjectOrgUser"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
+
+
+
+
         <!-- 文件条目表 -->
         <!--<table tableName="project"
                domainObjectName="Project"
