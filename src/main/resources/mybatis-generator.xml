@@ -36,14 +36,85 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!--生成对应表及类名-->
-        <table tableName="organization"
-               domainObjectName="Organization"
+       <!-- <table tableName="user"
+               domainObjectName="User"
                 enableCountByExample="true"
                 enableUpdateByExample="true"
                 enableDeleteByExample="true"
                 enableSelectByExample="true"
                 selectByExampleQueryId="true">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>-->
+        <!-- 项目表 -->
+        <!--<table tableName="project"
+               domainObjectName="Project"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>-->
+        <!-- 机构表 -->
+        <!--<table tableName="organization"
+               domainObjectName="Organization"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>-->
+
+        <!-- 业务字典表表 -->
+        <!--<table tableName="dict_entry"
+               domainObjectName="DictEntry"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>-->
+        <!-- 政策文件表 -->
+        <table tableName="policy_document"
+               domainObjectName="PolicyDocument"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
+        <!-- 项目文件关系表 -->
+        <table tableName="project_policy_document"
+               domainObjectName="ProjectPolicyDocument"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="project_id" sqlStatement="JDBC" identity="true"/>
+        </table>
+        <!-- 文件条目表 -->
+        <!--<table tableName="project"
+               domainObjectName="Project"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>-->
+        <!-- 项目专家映射表 -->
+        <!--<table tableName="project_expert"
+               domainObjectName="ProjectExpert"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="expert_id" sqlStatement="JDBC" identity="true"/>
+        </table>-->
     </context>
 </generatorConfiguration>
