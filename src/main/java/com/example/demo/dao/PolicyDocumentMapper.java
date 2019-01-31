@@ -18,6 +18,8 @@ public interface PolicyDocumentMapper {
 
     List<PolicyDocument> selectByExample(PolicyDocumentExample example);
 
+    List<PolicyDocument> selectByCondition(@Param("policyName") String policyName,@Param("classOne") String classOne,@Param("classTwo") String classTwo);
+
     PolicyDocument selectByPrimaryKey(String id);
 
     int updateByExampleSelective(@Param("record") PolicyDocument record, @Param("example") PolicyDocumentExample example);

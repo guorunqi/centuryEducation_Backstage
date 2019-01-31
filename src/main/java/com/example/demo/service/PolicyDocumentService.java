@@ -32,7 +32,21 @@ public class PolicyDocumentService {
      */
     public PolicyDocument selectPolicyDocumentById(String id){
         return policyDocumentMapper.selectByPrimaryKey(id);
+    }
 
+    /**
+     * 根据条件查询政策文件
+     * @return
+     */
+    public List<PolicyDocument> selectAllPolicyDocumentByCondition(String policyName,String classOne,String classTwo){
+            return  policyDocumentMapper.selectByCondition(policyName,classOne,classTwo);
+    }
 
+    /**
+     * 新增一条政策文件
+     * @return
+     */
+    public int insertPolicyDocument(PolicyDocument policyDocument){
+        return  policyDocumentMapper.insert(policyDocument);
     }
 }

@@ -109,11 +109,11 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.example.demo.domain.PolicyDocument" useGeneratedKeys="true" keyProperty="id" >
-    insert into policy_document (policy_name, class_one, class_two, 
+    insert into policy_document (id,policy_name, class_one, class_two,
       create_time, create_id, create_name, 
       update_id, update_name, update_time, 
       status, remarks)
-    values (#{policyName,jdbcType=VARCHAR}, #{classOne,jdbcType=VARCHAR}, #{classTwo,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR},#{policyName,jdbcType=VARCHAR}, #{classOne,jdbcType=VARCHAR}, #{classTwo,jdbcType=VARCHAR},
       #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, #{createName,jdbcType=VARCHAR}, 
       #{updateId,jdbcType=VARCHAR}, #{updateName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR})
@@ -195,6 +195,18 @@
     select count(*) from policy_document
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from policy_document where 1=1
+    <if test="policyName != null and policyName != ''">
+      and `policy_name` = #{policyName,jdbcType=VARCHAR}
+    </if>
+    <if test="classOne != null and classOne != ''">
+      and `class_one` = #{classOne,jdbcType=VARCHAR}
+    </if>
+    <if test="classTwo != null and classTwo != ''">
+      and `class_two` = #{classTwo,jdbcType=VARCHAR}
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >

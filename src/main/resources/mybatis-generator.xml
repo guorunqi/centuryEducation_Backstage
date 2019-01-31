@@ -117,7 +117,7 @@
             <generatedKey column="org_id" sqlStatement="JDBC" identity="true"/>
         </table>-->
         <!-- 项目机构关系表 -->
-        <table tableName="project_org_user"
+        <!--<table tableName="project_org_user"
                domainObjectName="ProjectOrgUser"
                enableCountByExample="true"
                enableUpdateByExample="true"
@@ -125,21 +125,21 @@
                enableSelectByExample="true"
                selectByExampleQueryId="true">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-        </table>
+        </table>-->
 
 
 
 
         <!-- 文件条目表 -->
-        <!--<table tableName="project"
-               domainObjectName="Project"
+        <table tableName="policy_document_entry"
+               domainObjectName="PolicyDocumentEntry"
                enableCountByExample="true"
                enableUpdateByExample="true"
                enableDeleteByExample="true"
                enableSelectByExample="true"
                selectByExampleQueryId="true">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-        </table>-->
+        </table>
         <!-- 项目专家映射表 -->
         <!--<table tableName="project_expert"
                domainObjectName="ProjectExpert"

@@ -88,7 +88,7 @@ public class projectManagementService {
     }
 
     /**
-     * 根据项目ID 查询一条数据
+     * 根据条件 查询数据
      */
     public List<Project> selectByCondition(String name,String classOne,String status,String classTwo,String orgs){
         return  projectMapper.selectByCondition(name,classOne,status,classTwo,orgs);
