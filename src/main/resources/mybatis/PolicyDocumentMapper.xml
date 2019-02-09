@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.demo.dao.ProjectMapper" >
-  <resultMap id="BaseResultMap" type="com.example.demo.domain.Project" >
+<mapper namespace="com.example.demo.dao.PolicyDocumentMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.domain.PolicyDocument" >
     <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="policy_name" property="policyName" jdbcType="VARCHAR" />
     <result column="class_one" property="classOne" jdbcType="VARCHAR" />
     <result column="class_two" property="classTwo" jdbcType="VARCHAR" />
-    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
-    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
-    <result column="stutas" property="stutas" jdbcType="VARCHAR" />
-    <result column="update_nema" property="updateNema" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
     <result column="update_id" property="updateId" jdbcType="VARCHAR" />
+    <result column="update_name" property="updateName" jdbcType="VARCHAR" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -74,17 +74,17 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, class_one, class_two, start_time, create_time, end_time, remarks, stutas, 
-    update_nema, update_id, update_time
+    id, policy_name, class_one, class_two, create_time, create_id, create_name, update_id, 
+    update_name, update_time, status, remarks
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.domain.ProjectExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.domain.PolicyDocumentExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from project
+    from policy_document
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,52 +95,34 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from project
+    from policy_document
     where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select * from project where 1=1
-    <if test="name != null and name != ''">
-      and `name` = #{name,jdbcType=VARCHAR}
-    </if>
-    <if test="classOne != null and classOne != ''">
-    and `class_one` = #{classOne,jdbcType=VARCHAR}
-  </if>
-    <if test="classTwo != null and classTwo != ''">
-      and `class_two` = #{classTwo,jdbcType=VARCHAR}
-    </if>
-    <if test="status != null and status != ''">
-      and `stutas` = #{status,jdbcType=VARCHAR}
-    </if>
-    <if test="orgs != null and orgs != ''">
-    and  id in (select pro_id from project_org_user as ou where ou.org_id = #{orgs,jdbcType=VARCHAR})
-    </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from project
+    delete from policy_document
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.example.demo.domain.ProjectExample" >
-    delete from project
+  <delete id="deleteByExample" parameterType="com.example.demo.domain.PolicyDocumentExample" >
+    delete from policy_document
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.example.demo.domain.Project" useGeneratedKeys="true" keyProperty="id" >
-    insert into project (id ,name, class_one, class_two,
-      start_time, create_time, end_time, 
-      remarks, stutas, update_nema, 
-      update_id, update_time)
-    values (#{id,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR}, #{classOne,jdbcType=VARCHAR}, #{classTwo,jdbcType=VARCHAR},
-      #{startTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
-      #{remarks,jdbcType=VARCHAR}, #{stutas,jdbcType=VARCHAR}, #{updateNema,jdbcType=VARCHAR}, 
-      #{updateId,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.example.demo.domain.PolicyDocument" useGeneratedKeys="true" keyProperty="id" >
+    insert into policy_document (id,policy_name, class_one, class_two,
+      create_time, create_id, create_name, 
+      update_id, update_name, update_time, 
+      status, remarks)
+    values (#{id,jdbcType=VARCHAR},#{policyName,jdbcType=VARCHAR}, #{classOne,jdbcType=VARCHAR}, #{classTwo,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, #{createName,jdbcType=VARCHAR}, 
+      #{updateId,jdbcType=VARCHAR}, #{updateName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.example.demo.domain.Project" useGeneratedKeys="true" keyProperty="id" >
-    insert into project
+  <insert id="insertSelective" parameterType="com.example.demo.domain.PolicyDocument" useGeneratedKeys="true" keyProperty="id" >
+    insert into policy_document
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="name != null" >
-        name,
+      <if test="policyName != null" >
+        policy_name,
       </if>
       <if test="classOne != null" >
         class_one,
@@ -148,34 +130,34 @@
       <if test="classTwo != null" >
         class_two,
       </if>
-      <if test="startTime != null" >
-        start_time,
-      </if>
       <if test="createTime != null" >
         create_time,
       </if>
-      <if test="endTime != null" >
-        end_time,
+      <if test="createId != null" >
+        create_id,
       </if>
-      <if test="remarks != null" >
-        remarks,
-      </if>
-      <if test="stutas != null" >
-        stutas,
-      </if>
-      <if test="updateNema != null" >
-        update_nema,
+      <if test="createName != null" >
+        create_name,
       </if>
       <if test="updateId != null" >
         update_id,
       </if>
+      <if test="updateName != null" >
+        update_name,
+      </if>
       <if test="updateTime != null" >
         update_time,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="policyName != null" >
+        #{policyName,jdbcType=VARCHAR},
       </if>
       <if test="classOne != null" >
         #{classOne,jdbcType=VARCHAR},
@@ -183,46 +165,58 @@
       <if test="classTwo != null" >
         #{classTwo,jdbcType=VARCHAR},
       </if>
-      <if test="startTime != null" >
-        #{startTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="endTime != null" >
-        #{endTime,jdbcType=TIMESTAMP},
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
       </if>
-      <if test="remarks != null" >
-        #{remarks,jdbcType=VARCHAR},
-      </if>
-      <if test="stutas != null" >
-        #{stutas,jdbcType=VARCHAR},
-      </if>
-      <if test="updateNema != null" >
-        #{updateNema,jdbcType=VARCHAR},
+      <if test="createName != null" >
+        #{createName,jdbcType=VARCHAR},
       </if>
       <if test="updateId != null" >
         #{updateId,jdbcType=VARCHAR},
       </if>
+      <if test="updateName != null" >
+        #{updateName,jdbcType=VARCHAR},
+      </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.example.demo.domain.ProjectExample" resultType="java.lang.Integer" >
-    select count(*) from project
+  <select id="countByExample" parameterType="com.example.demo.domain.PolicyDocumentExample" resultType="java.lang.Integer" >
+    select count(*) from policy_document
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from policy_document where 1=1
+    <if test="policyName != null and policyName != ''">
+      and `policy_name` = #{policyName,jdbcType=VARCHAR}
+    </if>
+    <if test="classOne != null and classOne != ''">
+      and `class_one` = #{classOne,jdbcType=VARCHAR}
+    </if>
+    <if test="classTwo != null and classTwo != ''">
+      and `class_two` = #{classTwo,jdbcType=VARCHAR}
+    </if>
+  </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update project
+    update policy_document
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=VARCHAR},
       </if>
-      <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.policyName != null" >
+        policy_name = #{record.policyName,jdbcType=VARCHAR},
       </if>
       <if test="record.classOne != null" >
         class_one = #{record.classOne,jdbcType=VARCHAR},
@@ -230,29 +224,29 @@
       <if test="record.classTwo != null" >
         class_two = #{record.classTwo,jdbcType=VARCHAR},
       </if>
-      <if test="record.startTime != null" >
-        start_time = #{record.startTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="record.createTime != null" >
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.endTime != null" >
-        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      <if test="record.createId != null" >
+        create_id = #{record.createId,jdbcType=VARCHAR},
       </if>
-      <if test="record.remarks != null" >
-        remarks = #{record.remarks,jdbcType=VARCHAR},
-      </if>
-      <if test="record.stutas != null" >
-        stutas = #{record.stutas,jdbcType=VARCHAR},
-      </if>
-      <if test="record.updateNema != null" >
-        update_nema = #{record.updateNema,jdbcType=VARCHAR},
+      <if test="record.createName != null" >
+        create_name = #{record.createName,jdbcType=VARCHAR},
       </if>
       <if test="record.updateId != null" >
         update_id = #{record.updateId,jdbcType=VARCHAR},
       </if>
+      <if test="record.updateName != null" >
+        update_name = #{record.updateName,jdbcType=VARCHAR},
+      </if>
       <if test="record.updateTime != null" >
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarks != null" >
+        remarks = #{record.remarks,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -260,28 +254,28 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update project
+    update policy_document
     set id = #{record.id,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
+      policy_name = #{record.policyName,jdbcType=VARCHAR},
       class_one = #{record.classOne,jdbcType=VARCHAR},
       class_two = #{record.classTwo,jdbcType=VARCHAR},
-      start_time = #{record.startTime,jdbcType=TIMESTAMP},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      end_time = #{record.endTime,jdbcType=TIMESTAMP},
-      remarks = #{record.remarks,jdbcType=VARCHAR},
-      stutas = #{record.stutas,jdbcType=VARCHAR},
-      update_nema = #{record.updateNema,jdbcType=VARCHAR},
+      create_id = #{record.createId,jdbcType=VARCHAR},
+      create_name = #{record.createName,jdbcType=VARCHAR},
       update_id = #{record.updateId,jdbcType=VARCHAR},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      update_name = #{record.updateName,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=VARCHAR},
+      remarks = #{record.remarks,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.domain.Project" >
-    update project
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.domain.PolicyDocument" >
+    update policy_document
     <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+      <if test="policyName != null" >
+        policy_name = #{policyName,jdbcType=VARCHAR},
       </if>
       <if test="classOne != null" >
         class_one = #{classOne,jdbcType=VARCHAR},
@@ -289,46 +283,46 @@
       <if test="classTwo != null" >
         class_two = #{classTwo,jdbcType=VARCHAR},
       </if>
-      <if test="startTime != null" >
-        start_time = #{startTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="endTime != null" >
-        end_time = #{endTime,jdbcType=TIMESTAMP},
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
       </if>
-      <if test="remarks != null" >
-        remarks = #{remarks,jdbcType=VARCHAR},
-      </if>
-      <if test="stutas != null" >
-        stutas = #{stutas,jdbcType=VARCHAR},
-      </if>
-      <if test="updateNema != null" >
-        update_nema = #{updateNema,jdbcType=VARCHAR},
+      <if test="createName != null" >
+        create_name = #{createName,jdbcType=VARCHAR},
       </if>
       <if test="updateId != null" >
         update_id = #{updateId,jdbcType=VARCHAR},
       </if>
+      <if test="updateName != null" >
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.demo.domain.Project" >
-    update project
-    set name = #{name,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.domain.PolicyDocument" >
+    update policy_document
+    set policy_name = #{policyName,jdbcType=VARCHAR},
       class_one = #{classOne,jdbcType=VARCHAR},
       class_two = #{classTwo,jdbcType=VARCHAR},
-      start_time = #{startTime,jdbcType=TIMESTAMP},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP},
-      remarks = #{remarks,jdbcType=VARCHAR},
-      stutas = #{stutas,jdbcType=VARCHAR},
-      update_nema = #{updateNema,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
       update_id = #{updateId,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

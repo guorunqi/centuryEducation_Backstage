@@ -18,7 +18,7 @@ public interface ProjectMapper {
 
     List<Project> selectByExample(ProjectExample example);
 
-    List<Project> selectAllProject();
+    List<Project> selectByCondition(@Param("name") String name,@Param("classOne") String classOne,@Param("status") String status,@Param("classTwo") String classTwo,@Param("orgs") String orgs);
 
     Project selectByPrimaryKey(String id);
 

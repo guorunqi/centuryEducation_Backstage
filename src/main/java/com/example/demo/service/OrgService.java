@@ -23,7 +23,7 @@ import java.util.List;
             return  null;
         }
         /**
-         * 根据code查询机构机构
+         * 根据code查询机构
          * @return
          */
         public Organization selectOrgBycode(String code){
@@ -35,5 +35,13 @@ import java.util.List;
                 return  o;
             }
             return  null;
+        }
+
+        /**
+         * 根据id查询机构
+         * @return
+         */
+        public Organization selectOrgByOrgId(String id){
+            return  organizationMapper.selectByPrimaryKey(id);
         }
 }

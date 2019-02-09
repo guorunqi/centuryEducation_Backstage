@@ -3,14 +3,14 @@ package com.example.demo.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectPolicyDocumentExample {
+public class ProjectOrgExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public ProjectPolicyDocumentExample() {
+    public ProjectOrgExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -104,143 +104,213 @@ public class ProjectPolicyDocumentExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andProjectIdIsNull() {
-            addCriterion("project_id is null");
+        public Criteria andIdIsNull() {
+            addCriterion("id is null");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdIsNotNull() {
-            addCriterion("project_id is not null");
+        public Criteria andIdIsNotNull() {
+            addCriterion("id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdEqualTo(String value) {
-            addCriterion("project_id =", value, "projectId");
+        public Criteria andIdEqualTo(String value) {
+            addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdNotEqualTo(String value) {
-            addCriterion("project_id <>", value, "projectId");
+        public Criteria andIdNotEqualTo(String value) {
+            addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdGreaterThan(String value) {
-            addCriterion("project_id >", value, "projectId");
+        public Criteria andIdGreaterThan(String value) {
+            addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdGreaterThanOrEqualTo(String value) {
-            addCriterion("project_id >=", value, "projectId");
+        public Criteria andIdGreaterThanOrEqualTo(String value) {
+            addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdLessThan(String value) {
-            addCriterion("project_id <", value, "projectId");
+        public Criteria andIdLessThan(String value) {
+            addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdLessThanOrEqualTo(String value) {
-            addCriterion("project_id <=", value, "projectId");
+        public Criteria andIdLessThanOrEqualTo(String value) {
+            addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdLike(String value) {
-            addCriterion("project_id like", value, "projectId");
+        public Criteria andIdLike(String value) {
+            addCriterion("id like", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdNotLike(String value) {
-            addCriterion("project_id not like", value, "projectId");
+        public Criteria andIdNotLike(String value) {
+            addCriterion("id not like", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdIn(List<String> values) {
-            addCriterion("project_id in", values, "projectId");
+        public Criteria andIdIn(List<String> values) {
+            addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdNotIn(List<String> values) {
-            addCriterion("project_id not in", values, "projectId");
+        public Criteria andIdNotIn(List<String> values) {
+            addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdBetween(String value1, String value2) {
-            addCriterion("project_id between", value1, value2, "projectId");
+        public Criteria andIdBetween(String value1, String value2) {
+            addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdNotBetween(String value1, String value2) {
-            addCriterion("project_id not between", value1, value2, "projectId");
+        public Criteria andIdNotBetween(String value1, String value2) {
+            addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andPolicyDocumentIdIsNull() {
-            addCriterion("policy_document_id is null");
+        public Criteria andOrgIdIsNull() {
+            addCriterion("org_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andPolicyDocumentIdIsNotNull() {
-            addCriterion("policy_document_id is not null");
+        public Criteria andOrgIdIsNotNull() {
+            addCriterion("org_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPolicyDocumentIdEqualTo(String value) {
-            addCriterion("policy_document_id =", value, "policyDocumentId");
+        public Criteria andOrgIdEqualTo(String value) {
+            addCriterion("org_id =", value, "orgId");
             return (Criteria) this;
         }
 
-        public Criteria andPolicyDocumentIdNotEqualTo(String value) {
-            addCriterion("policy_document_id <>", value, "policyDocumentId");
+        public Criteria andOrgIdNotEqualTo(String value) {
+            addCriterion("org_id <>", value, "orgId");
             return (Criteria) this;
         }
 
-        public Criteria andPolicyDocumentIdGreaterThan(String value) {
-            addCriterion("policy_document_id >", value, "policyDocumentId");
+        public Criteria andOrgIdGreaterThan(String value) {
+            addCriterion("org_id >", value, "orgId");
             return (Criteria) this;
         }
 
-        public Criteria andPolicyDocumentIdGreaterThanOrEqualTo(String value) {
-            addCriterion("policy_document_id >=", value, "policyDocumentId");
+        public Criteria andOrgIdGreaterThanOrEqualTo(String value) {
+            addCriterion("org_id >=", value, "orgId");
             return (Criteria) this;
         }
 
-        public Criteria andPolicyDocumentIdLessThan(String value) {
-            addCriterion("policy_document_id <", value, "policyDocumentId");
+        public Criteria andOrgIdLessThan(String value) {
+            addCriterion("org_id <", value, "orgId");
             return (Criteria) this;
         }
 
-        public Criteria andPolicyDocumentIdLessThanOrEqualTo(String value) {
-            addCriterion("policy_document_id <=", value, "policyDocumentId");
+        public Criteria andOrgIdLessThanOrEqualTo(String value) {
+            addCriterion("org_id <=", value, "orgId");
             return (Criteria) this;
         }
 
-        public Criteria andPolicyDocumentIdLike(String value) {
-            addCriterion("policy_document_id like", value, "policyDocumentId");
+        public Criteria andOrgIdLike(String value) {
+            addCriterion("org_id like", value, "orgId");
             return (Criteria) this;
         }
 
-        public Criteria andPolicyDocumentIdNotLike(String value) {
-            addCriterion("policy_document_id not like", value, "policyDocumentId");
+        public Criteria andOrgIdNotLike(String value) {
+            addCriterion("org_id not like", value, "orgId");
             return (Criteria) this;
         }
 
-        public Criteria andPolicyDocumentIdIn(List<String> values) {
-            addCriterion("policy_document_id in", values, "policyDocumentId");
+        public Criteria andOrgIdIn(List<String> values) {
+            addCriterion("org_id in", values, "orgId");
             return (Criteria) this;
         }
 
-        public Criteria andPolicyDocumentIdNotIn(List<String> values) {
-            addCriterion("policy_document_id not in", values, "policyDocumentId");
+        public Criteria andOrgIdNotIn(List<String> values) {
+            addCriterion("org_id not in", values, "orgId");
             return (Criteria) this;
         }
 
-        public Criteria andPolicyDocumentIdBetween(String value1, String value2) {
-            addCriterion("policy_document_id between", value1, value2, "policyDocumentId");
+        public Criteria andOrgIdBetween(String value1, String value2) {
+            addCriterion("org_id between", value1, value2, "orgId");
             return (Criteria) this;
         }
 
-        public Criteria andPolicyDocumentIdNotBetween(String value1, String value2) {
-            addCriterion("policy_document_id not between", value1, value2, "policyDocumentId");
+        public Criteria andOrgIdNotBetween(String value1, String value2) {
+            addCriterion("org_id not between", value1, value2, "orgId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdIsNull() {
+            addCriterion("pro_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdIsNotNull() {
+            addCriterion("pro_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdEqualTo(String value) {
+            addCriterion("pro_id =", value, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdNotEqualTo(String value) {
+            addCriterion("pro_id <>", value, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdGreaterThan(String value) {
+            addCriterion("pro_id >", value, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdGreaterThanOrEqualTo(String value) {
+            addCriterion("pro_id >=", value, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdLessThan(String value) {
+            addCriterion("pro_id <", value, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdLessThanOrEqualTo(String value) {
+            addCriterion("pro_id <=", value, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdLike(String value) {
+            addCriterion("pro_id like", value, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdNotLike(String value) {
+            addCriterion("pro_id not like", value, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdIn(List<String> values) {
+            addCriterion("pro_id in", values, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdNotIn(List<String> values) {
+            addCriterion("pro_id not in", values, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdBetween(String value1, String value2) {
+            addCriterion("pro_id between", value1, value2, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdNotBetween(String value1, String value2) {
+            addCriterion("pro_id not between", value1, value2, "proId");
             return (Criteria) this;
         }
     }
