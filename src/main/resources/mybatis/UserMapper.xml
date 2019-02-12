@@ -124,7 +124,7 @@
     </if>
   </delete>
   <insert id="insert" keyProperty="id" parameterType="com.example.demo.domain.User" useGeneratedKeys="true">
-    insert into user (code, login_name, password, 
+    insert into user (id,code, login_name, password,
       name, role_id, status, 
       last_login_time, password_error_number, phone, 
       email, education, political_outlook, 
@@ -133,7 +133,7 @@
       remarks, update_id, update_name, 
       update_time, public_login_code, is_public
       )
-    values (#{code,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
       #{name,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
       #{lastLoginTime,jdbcType=TIMESTAMP}, #{passwordErrorNumber,jdbcType=INTEGER}, #{phone,jdbcType=INTEGER}, 
       #{email,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, #{politicalOutlook,jdbcType=VARCHAR}, 
@@ -520,4 +520,11 @@
       is_public = #{isPublic,jdbcType=BIT}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="queryUserByOrgID" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select u.*
+    from org_user ou,user u
+    where ou.user_id=u.id and ou.org_id=#{id,jdbcType=VARCHAR}
+  </select>
+
 </mapper>

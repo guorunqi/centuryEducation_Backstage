@@ -2,6 +2,8 @@ package com.example.demo.dao;
 
 import com.example.demo.domain.User;
 import com.example.demo.domain.UserExample;
+
+import java.util.HashMap;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -29,4 +31,5 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     List<User> queryUserByOrgID(String id);
+
 }

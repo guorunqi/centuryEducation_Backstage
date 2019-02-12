@@ -131,15 +131,15 @@
 
 
         <!-- 文件条目表 -->
-        <table tableName="policy_document_entry"
-               domainObjectName="PolicyDocumentEntry"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true">
-            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-        </table>
+        <!--<table tableName="policy_document_entry"-->
+               <!--domainObjectName="PolicyDocumentEntry"-->
+               <!--enableCountByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--</table>-->
         <!-- 项目专家映射表 -->
         <!--<table tableName="project_expert"
                domainObjectName="ProjectExpert"
@@ -150,5 +150,25 @@
                selectByExampleQueryId="true">
             <generatedKey column="expert_id" sqlStatement="JDBC" identity="true"/>
         </table>-->
+        <!-- 角色映射表 -->
+        <!--<table tableName="role"-->
+               <!--domainObjectName="Role"-->
+               <!--enableCountByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--</table>-->
+        <!-- 用户机构映射表 -->
+        <table tableName="org_user"
+               domainObjectName="OrgUser"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
     </context>
 </generatorConfiguration>

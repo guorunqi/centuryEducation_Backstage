@@ -1,7 +1,7 @@
 package com.example.demo.dao;
 
+import com.example.demo.domain.OrgUser;
 import com.example.demo.domain.OrgUserExample;
-import com.example.demo.domain.OrgUserKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,15 +10,21 @@ public interface OrgUserMapper {
 
     int deleteByExample(OrgUserExample example);
 
-    int deleteByPrimaryKey(OrgUserKey key);
+    int deleteByPrimaryKey(String id);
 
-    int insert(OrgUserKey record);
+    int insert(OrgUser record);
 
-    int insertSelective(OrgUserKey record);
+    int insertSelective(OrgUser record);
 
-    List<OrgUserKey> selectByExample(OrgUserExample example);
+    List<OrgUser> selectByExample(OrgUserExample example);
 
-    int updateByExampleSelective(@Param("record") OrgUserKey record, @Param("example") OrgUserExample example);
+    OrgUser selectByPrimaryKey(String id);
 
-    int updateByExample(@Param("record") OrgUserKey record, @Param("example") OrgUserExample example);
+    int updateByExampleSelective(@Param("record") OrgUser record, @Param("example") OrgUserExample example);
+
+    int updateByExample(@Param("record") OrgUser record, @Param("example") OrgUserExample example);
+
+    int updateByPrimaryKeySelective(OrgUser record);
+
+    int updateByPrimaryKey(OrgUser record);
 }

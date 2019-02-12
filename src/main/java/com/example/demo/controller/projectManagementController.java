@@ -28,8 +28,6 @@ public class projectManagementController {
     @Autowired
     private UserService userService;
     @Autowired
-    private OrgUserService orgUserService;
-    @Autowired
     private PolicyDocumentService policyDocumentService;
     @Autowired
     private projectManagementService projectManagementService;

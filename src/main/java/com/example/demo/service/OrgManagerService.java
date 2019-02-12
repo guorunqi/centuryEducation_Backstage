@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dao.OrganizationMapper;
 import com.example.demo.domain.Organization;
 import com.example.demo.domain.OrganizationExample;
+import com.example.demo.util.CommonUtil;
 import com.example.demo.util.TreePojo;
 import com.example.demo.util.TreeUtil;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,33 @@ public class OrgManagerService {
         if(organization.getId()!=null&&!organization.getId().equals("")){
             organizationMapper.updateByPrimaryKeySelective(organization);
         }else {
-            organizationMapper.insertSelective(organization);
+            organization.setId(CommonUtil.getPrimaryKey());
+            organization.setOrgTypeId("1");
+            organizationMapper.insert(organization);
+        }
+        return true;
+    }
+    public Organization queryOrgById(String id){
+        return organizationMapper.selectByPrimaryKey(id);
+    }
+    public Boolean updateOrg(Organization org){
+        try {
+            organizationMapper.updateByPrimaryKeySelective(org);
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    public Boolean deleteOrg(String id){
+        try {
+            if(id==null||id.equals("")){
+                return false;
+            }
+            organizationMapper.deleteByPrimaryKey(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
         }
         return true;
     }

@@ -119,14 +119,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.example.demo.domain.Organization" useGeneratedKeys="true" keyProperty="id" >
-    insert into organization (code, name, address, 
+    insert into organization (id,code, name, address,
       zipcode, emali, website, 
       charge, charge_phone, contacts, 
       contacts_phone, remarks, orgdegree, 
       route, p_id, sortno, 
       update_name, update_id, update_time, 
       stutas, org_type_id)
-    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
       #{zipcode,jdbcType=INTEGER}, #{emali,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, 
       #{charge,jdbcType=VARCHAR}, #{chargePhone,jdbcType=INTEGER}, #{contacts,jdbcType=VARCHAR}, 
       #{contactsPhone,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, #{orgdegree,jdbcType=INTEGER}, 
@@ -137,8 +137,9 @@
   <insert id="insertSelective" parameterType="com.example.demo.domain.Organization" useGeneratedKeys="true" keyProperty="id" >
     insert into organization
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      id
       <if test="code != null" >
-        code,
+        'code',
       </if>
       <if test="name != null" >
         name,
@@ -199,6 +200,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+        #{id,jdbcType=VARCHAR},
       <if test="code != null" >
         #{code,jdbcType=VARCHAR},
       </if>

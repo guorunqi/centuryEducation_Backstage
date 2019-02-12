@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demo.dao.OrgUserMapper" >
-  <resultMap id="BaseResultMap" type="com.example.demo.domain.OrgUserKey" >
-    <id column="org_id" property="orgId" jdbcType="VARCHAR" />
-    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+  <resultMap id="BaseResultMap" type="com.example.demo.domain.OrgUser" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="org_id" property="orgId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -64,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    org_id, user_id
+    id, org_id, user_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.domain.OrgUserExample" >
     select
@@ -81,10 +82,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.example.demo.domain.OrgUserKey" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from org_user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from org_user
-    where org_id = #{orgId,jdbcType=VARCHAR}
-      and user_id = #{userId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.example.demo.domain.OrgUserExample" >
     delete from org_user
@@ -92,18 +98,24 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.example.demo.domain.OrgUserKey" useGeneratedKeys="true" keyProperty="orgId" >
-    insert into org_user (org_id,user_id)
-    values (#{orgId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.example.demo.domain.OrgUser" useGeneratedKeys="true" keyProperty="id" >
+    insert into org_user (id,org_id, user_id)
+    values (#{id,jdbcType=VARCHAR},#{orgId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.example.demo.domain.OrgUserKey" useGeneratedKeys="true" keyProperty="orgId" >
+  <insert id="insertSelective" parameterType="com.example.demo.domain.OrgUser" useGeneratedKeys="true" keyProperty="id" >
     insert into org_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orgId != null" >
+        org_id,
+      </if>
       <if test="userId != null" >
         user_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
       <if test="userId != null" >
         #{userId,jdbcType=VARCHAR},
       </if>
@@ -118,6 +130,9 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update org_user
     <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
       <if test="record.orgId != null" >
         org_id = #{record.orgId,jdbcType=VARCHAR},
       </if>
@@ -131,10 +146,29 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update org_user
-    set org_id = #{record.orgId,jdbcType=VARCHAR},
+    set id = #{record.id,jdbcType=VARCHAR},
+      org_id = #{record.orgId,jdbcType=VARCHAR},
       user_id = #{record.userId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.domain.OrgUser" >
+    update org_user
+    <set >
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.domain.OrgUser" >
+    update org_user
+    set org_id = #{orgId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
