@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.dao.OrgTypeMapper;
 import com.example.demo.dao.OrganizationMapper;
+import com.example.demo.domain.OrgType;
+import com.example.demo.domain.OrgTypeExample;
 import com.example.demo.domain.Organization;
 import com.example.demo.domain.OrganizationExample;
 import com.example.demo.util.CommonUtil;
@@ -19,6 +22,8 @@ import java.util.function.BooleanSupplier;
 public class OrgManagerService {
     @Resource
     private OrganizationMapper organizationMapper;
+    @Resource
+    private OrgTypeMapper orgTypeMapper;
     public List<TreePojo> queryAllOrganization(){
         OrganizationExample organizationExample=new OrganizationExample();
         List<Organization> orgs= organizationMapper.selectByExample(organizationExample);
@@ -59,5 +64,9 @@ public class OrgManagerService {
             return false;
         }
         return true;
+    }
+    public List<OrgType> queryOrgType(){
+         OrgTypeExample example=new OrgTypeExample();
+        return orgTypeMapper.selectByExample(example);
     }
 }

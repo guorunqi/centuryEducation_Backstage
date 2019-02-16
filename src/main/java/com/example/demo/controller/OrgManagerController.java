@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.domain.ControllerReturn;
+import com.example.demo.domain.OrgType;
 import com.example.demo.domain.Organization;
 import com.example.demo.service.OrgManagerService;
 import com.example.demo.util.TreePojo;
@@ -115,6 +116,21 @@ public class OrgManagerController {
             }
             controllerReturn.setCode("true");
             controllerReturn.setData("true");
+        }catch (Exception e){
+            controllerReturn.setCode("false");
+            controllerReturn.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return controllerReturn;
+    }
+    @ResponseBody
+    @RequestMapping(value="queryAllOrgType",method =RequestMethod.POST,produces = "application/json;charset=UTF-8")
+    public ControllerReturn queryAllOrgType(){
+        ControllerReturn controllerReturn=new ControllerReturn();
+        try{
+            List<OrgType> list=orgManagerService.queryOrgType();
+            controllerReturn.setCode("true");
+            controllerReturn.setData(list);
         }catch (Exception e){
             controllerReturn.setCode("false");
             controllerReturn.setMessage(e.toString());

@@ -161,8 +161,18 @@
             <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
         <!--</table>-->
         <!-- 用户机构映射表 -->
-        <table tableName="org_user"
-               domainObjectName="OrgUser"
+        <!--<table tableName="org_user"-->
+               <!--domainObjectName="OrgUser"-->
+               <!--enableCountByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--</table>-->
+        <!-- 机构类型映射表 -->
+        <table tableName="org_type"
+               domainObjectName="OrgType"
                enableCountByExample="true"
                enableUpdateByExample="true"
                enableDeleteByExample="true"
