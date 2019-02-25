@@ -171,14 +171,54 @@
             <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
         <!--</table>-->
         <!-- 机构类型映射表 -->
-        <table tableName="org_type"
-               domainObjectName="OrgType"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true">
-            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        <!--<table tableName="org_type"-->
+               <!--domainObjectName="OrgType"-->
+               <!--enableCountByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--</table>-->
+        <!-- 自评映射表 -->
+        <!--<table tableName="self_evaluation"-->
+               <!--domainObjectName="SelfEvaluation"-->
+               <!--enableCountByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--</table>-->
+        <!-- 自评条目映射表 -->
+        <!--<table tableName="self_evaluation_entry"-->
+               <!--domainObjectName="SelfEvaluationEntry"-->
+               <!--enableCountByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--</table>-->
+        <!-- 自评结果映射表 -->
+        <!--<table tableName="self_evaluation_entry_result"-->
+               <!--domainObjectName="SelfEvaluationEntryResult"-->
+               <!--enableCountByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--</table>-->
+        <!-- 评估映射表 -->
+        <table tableName="assessment"
+            domainObjectName="Assessment"
+            enableCountByExample="true"
+            enableUpdateByExample="true"
+            enableDeleteByExample="true"
+            enableSelectByExample="true"
+            selectByExampleQueryId="true">
+        <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
     </context>
 </generatorConfiguration>
