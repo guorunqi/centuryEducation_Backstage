@@ -97,6 +97,12 @@ public class projectManagementController {
                 JSONObject specialistTable = SpecialistTable.getJSONObject(i);
                 //获取机构信息
                 Organization organization = orgServer.selectOrgBycode(specialistTable.getString("SpecialistSchool"));
+                //插入项目机构表数据
+                ProjectOrg projectOrg = new ProjectOrg();
+                projectOrg.setId(CommonUtil.getPrimaryKey());
+                projectOrg.setProId(ProjectPrimaryKey);
+                projectOrg.setOrgId(organization.getId());
+                projectOrgService.insertProjectOrg(projectOrg);
 
                 ProjectOrgUser ProjectOrgUser = new ProjectOrgUser();
                 ProjectOrgUser.setId(CommonUtil.getPrimaryKey());
@@ -105,6 +111,7 @@ public class projectManagementController {
                 ProjectOrgUser.setUserId(specialistTable.getString("SpecialistId"));
                 //插入项目机构专家表表数据
                 projectOrgUserService.insertProjectOrgUser(ProjectOrgUser);
+                //插入项目机构表数据
             }
             controllerReturn.setCode("true");
             return controllerReturn;

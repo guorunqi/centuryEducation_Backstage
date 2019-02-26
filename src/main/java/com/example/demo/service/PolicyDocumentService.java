@@ -49,4 +49,19 @@ public class PolicyDocumentService {
     public int insertPolicyDocument(PolicyDocument policyDocument){
         return  policyDocumentMapper.insert(policyDocument);
     }
+
+    /**
+     * 根据ID 更新政策文件
+     * @return
+     */
+    public int upDataPolicyDocument(PolicyDocument policyDocument){
+        return  policyDocumentMapper.updateByPrimaryKey(policyDocument);
+    }
+    /**
+     * 删除政策文件
+     * @return
+     */
+    public int deletePolicyDocument(String id){
+        return  policyDocumentMapper.deleteByPrimaryKey(id);
+    }
 }

@@ -54,4 +54,10 @@ public class PolicyDocumentEntryService {
         }
         return policyDocumentEntryMapper.deleteByPrimaryKey(id);
     }
+
+    public int deletePolicyDocumentEntryByPolicyDocumentId(String id) {
+        PolicyDocumentEntryExample example = new PolicyDocumentEntryExample();
+        example.or().andPolicyDocumentIdEqualTo(id);
+        return policyDocumentEntryMapper.deleteByExample(example);
+    }
 }

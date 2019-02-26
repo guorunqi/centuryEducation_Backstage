@@ -29,6 +29,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>5.1.3.RELEASE</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
@@ -36,12 +41,6 @@
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>1.3.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>1.2.40</version>
 		</dependency>
 
 		<dependency>
@@ -55,15 +54,11 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>net.minidev</groupId>
-			<artifactId>json-smart</artifactId>
-			<version>2.3</version>
-		</dependency>
-		<dependency>
 			<groupId>com.vaadin.external.google</groupId>
 			<artifactId>android-json</artifactId>
 			<version>0.0.20131108.vaadin1</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
@@ -85,11 +80,10 @@
 			<artifactId>lombok</artifactId>
 			<version>1.16.12</version>
 		</dependency>
-		<!-- 热部署-->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional> <!-- 这个需要为 true 热部署才有效 -->
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.23</version>
 		</dependency>
 	</dependencies>
 
@@ -99,7 +93,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-
 
 			<plugin>
 				<groupId>org.mybatis.generator</groupId>
@@ -134,14 +127,6 @@
 					<!-- 自动生成的配置 -->
 					<configurationFile>
 						src/main/resources/mybatis-generator.xml</configurationFile>
-				</configuration>
-			</plugin>
-			<!-- 热部署-->
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<fork>true</fork>
 				</configuration>
 			</plugin>
 		</plugins>
