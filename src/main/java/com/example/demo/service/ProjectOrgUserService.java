@@ -20,11 +20,7 @@ public class ProjectOrgUserService {
     public List<ProjectOrgUser> selectOrgUserByProjectId(String ProjectId){
         ProjectOrgUserExample projectOrgUserExample = new ProjectOrgUserExample();
         projectOrgUserExample.or().andProIdEqualTo(ProjectId);
-        List<ProjectOrgUser> ProjectOrgs = projectOrgUserMapper.selectByExample(projectOrgUserExample);
-        if (ProjectOrgs.size() > 0){
-            return ProjectOrgs;
-        }
-        return  null;
+        return projectOrgUserMapper.selectByExample(projectOrgUserExample);
     }
 
     /**

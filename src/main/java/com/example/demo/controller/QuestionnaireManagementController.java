@@ -359,8 +359,6 @@ public class QuestionnaireManagementController {
                 answerResult.setSelectionRate(Float.parseFloat(SelectionRateMap.get("selectionRate").toString()));
                 answerResultService.insert(answerResult);
             }
-
-
                 controllerReturn.setCode("true");
                 controllerReturn.setMessage("保存成功");
 
