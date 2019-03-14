@@ -2,6 +2,8 @@ package com.example.demo.dao;
 
 import com.example.demo.domain.Assessment;
 import com.example.demo.domain.AssessmentExample;
+
+import java.util.HashMap;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +29,5 @@ public interface AssessmentMapper {
     int updateByPrimaryKeySelective(Assessment record);
 
     int updateByPrimaryKey(Assessment record);
+    List<HashMap> selectAssessment(@Param("projectName")String projectName,@Param("name")String name,@Param("scoringType")Integer scoringType);
 }

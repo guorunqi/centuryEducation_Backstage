@@ -110,12 +110,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.example.demo.domain.Assessment" useGeneratedKeys="true" keyProperty="id" >
-    insert into assessment (name, project_id, scoring_type, 
+    insert into assessment (id,name, project_id, scoring_type,
       grade, remarks, create_time, 
       create_name, create_id, update_time, 
       update_name, update_id, status
       )
-    values (#{name,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, #{scoringType,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, #{scoringType,jdbcType=VARCHAR},
       #{grade,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{createName,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{updateName,jdbcType=VARCHAR}, #{updateId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
@@ -330,19 +330,19 @@
       status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <select id="selectAssessment" resultMap="BaseResultMap" parameterType="com.example.demo.domain.AssessmentExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    from assessment
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
+  <select id="selectAssessment" resultType="java.util.HashMap" parameterType="com.example.demo.domain.AssessmentExample" >
+    SELECT
+    p.NAME projectname,
+    a.*
+    FROM
+    assessment a,
+    project p
+    WHERE
+    a.project_id = p.id and
+    p.name LIKE CONCAT('%',#{projectName},'%') and
+    a.name LIKE CONCAT('%',#{name},'%')
+    <if test="scoringType != null" >
+       and a.scoring_type =#{scoringType}
     </if>
   </select>
 </mapper>

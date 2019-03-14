@@ -19,15 +19,7 @@ public class SelfEvaluationService {
     @Resource
     SelfEvaluationMapper selfEvaluationMapper;
     public List<SelfEvaluation> querySelfEvaluation(HashMap map){
-        SelfEvaluationExample selectByExample=new SelfEvaluationExample();
-        SelfEvaluationExample.Criteria criteria=selectByExample.createCriteria();
-        if(!StringUtils.isBlank(map.get("name").toString())){
-            criteria.andNameLike(map.get("name").toString());
-        }
-        if(!StringUtils.isBlank(map.get("projectName").toString())){
-            criteria.andNameLike(map.get("projectName").toString());
-        }
-        return selfEvaluationMapper.selectByExample(selectByExample);
+        return selfEvaluationMapper.querySelfEvaluation(map.get("name").toString(),map.get("projectName").toString());
     }
     public SelfEvaluation querySelfEvaluationById(String id){
         return selfEvaluationMapper.selectByPrimaryKey(id);
@@ -66,4 +58,26 @@ public class SelfEvaluationService {
         }
 
     }
+    public List<HashMap> querySelfEvaluationDataByID(String id){
+        List<HashMap> list=selfEvaluationMapper.querySelfEvaluationDataByID(id);
+        for(HashMap map:list){
+            map.put("title",map.get("name").toString()+":"+map.get("title").toString());
+        }
+        return list;
+    }
+    public List<HashMap> queryPolicyDocumentEntryByID(String id){
+        List<HashMap> list=selfEvaluationMapper.queryPolicyDocumentEntryByID(id);
+        for(HashMap map:list){
+            map.put("title",map.get("title").toString()+":"+map.get("name").toString());
+        }
+        return list;
+    }
+    public List<HashMap> queryProblemByID(String id){
+        List<HashMap> list=selfEvaluationMapper.queryProblemByID(id);
+        for(HashMap map:list){
+            map.put("title",map.get("title").toString()+":"+map.get("name").toString());
+        }
+        return list;
+    }
+
 }

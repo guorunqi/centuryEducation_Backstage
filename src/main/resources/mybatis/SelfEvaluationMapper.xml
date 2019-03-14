@@ -298,4 +298,44 @@
       project_name = #{projectName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="querySelfEvaluationDataByID" resultType="java.util.HashMap" parameterType="java.lang.String" >
+    SELECT
+        se.name,
+        see.id,
+        see.title
+    FROM
+        self_evaluation_entry see
+        LEFT JOIN self_evaluation se ON see.self_evaluation_id = se.id
+    where se.project_id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="queryPolicyDocumentEntryByID" resultType="java.util.HashMap" parameterType="java.lang.String" >
+    SELECT
+    pd.policy_name name,
+    pde.id,
+    pde.name title
+    FROM
+    policy_document_entry pde
+    LEFT JOIN policy_document pd ON pde.policy_document_id=pd.id
+		LEFT JOIN project_policy_document ppd on pd.id=ppd.policy_document_id
+    where ppd.project_id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="queryProblemByID" resultType="java.util.HashMap" parameterType="java.lang.String" >
+    SELECT
+    q.name,
+    p.id,
+    p.content title
+    FROM
+    problem p
+    LEFT JOIN questionnaire q ON p.questionnaire_id = q.id
+    where q.project_id =#{id,jdbcType=VARCHAR}
+  </select>
+  <select id="querySelfEvaluation" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT
+        se.*
+    FROM
+        self_evaluation se
+        LEFT JOIN project p ON se.project_id = p.id
+        where se.name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+        and p.name like CONCAT('%',#{projectName,jdbcType=VARCHAR},'%')
+  </select>
 </mapper>

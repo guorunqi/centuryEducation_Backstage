@@ -58,4 +58,10 @@ public class SelfEvaluationEntryService {
         }
 
     }
+    public List<SelfEvaluationEntry> querySelfEvaluationEntryBySelfEvaluationID(String id){
+        SelfEvaluationEntryExample selfEvaluationEntryExample=new SelfEvaluationEntryExample();
+        selfEvaluationEntryExample.or().andSelfEvaluationIdEqualTo(id);
+        selfEvaluationEntryExample.setOrderByClause("sortno asc");
+        return selfEvaluationEntryMapper.selectByExample(selfEvaluationEntryExample);
+    }
 }

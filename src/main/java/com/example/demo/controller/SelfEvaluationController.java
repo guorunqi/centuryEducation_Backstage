@@ -106,4 +106,62 @@ public class SelfEvaluationController {
         }
         return controllerReturn;
     }
+    //评估条目关联自评条目获取条目
+    @ResponseBody
+    @RequestMapping(value="/querySelfEvaluationDataByID",method =RequestMethod.POST,produces = "application/json;charset=UTF-8")
+    public ControllerReturn querySelfEvaluationDataByID(@RequestBody String data){
+
+        ControllerReturn controllerReturn=new ControllerReturn();
+        try{
+            String id=JSONObject.parseObject(data).get("id").toString();
+
+            List<HashMap> list=selfEvaluationService.querySelfEvaluationDataByID(id);
+            controllerReturn.setCode("true");
+            controllerReturn.setData(list);
+        }catch (Exception e){
+            controllerReturn.setCode("false");
+            controllerReturn.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return controllerReturn;
+    }
+    //评估条目关联政策文件获取条目
+    @ResponseBody
+    @RequestMapping(value="/queryPolicyDocumentEntryByID",method =RequestMethod.POST,produces = "application/json;charset=UTF-8")
+    public ControllerReturn queryPolicyDocumentEntryByID(@RequestBody String data){
+
+        ControllerReturn controllerReturn=new ControllerReturn();
+        try{
+            String id=JSONObject.parseObject(data).get("id").toString();
+
+            List<HashMap> list=selfEvaluationService.queryPolicyDocumentEntryByID(id);
+            controllerReturn.setCode("true");
+            controllerReturn.setData(list);
+        }catch (Exception e){
+            controllerReturn.setCode("false");
+            controllerReturn.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return controllerReturn;
+    }
+    //评估条目关联问卷问题获取条目
+    @ResponseBody
+    @RequestMapping(value="/queryProblemByID",method =RequestMethod.POST,produces = "application/json;charset=UTF-8")
+    public ControllerReturn queryProblemByID(@RequestBody String data){
+
+        ControllerReturn controllerReturn=new ControllerReturn();
+        try{
+            String id=JSONObject.parseObject(data).get("id").toString();
+
+            List<HashMap> list=selfEvaluationService.queryProblemByID(id);
+            controllerReturn.setCode("true");
+            controllerReturn.setData(list);
+        }catch (Exception e){
+            controllerReturn.setCode("false");
+            controllerReturn.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return controllerReturn;
+    }
+
 }

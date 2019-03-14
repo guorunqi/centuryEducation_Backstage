@@ -211,14 +211,60 @@
             <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
         <!--</table>-->
         <!-- 评估映射表 -->
-        <table tableName="assessment"
-            domainObjectName="Assessment"
-            enableCountByExample="true"
-            enableUpdateByExample="true"
-            enableDeleteByExample="true"
-            enableSelectByExample="true"
-            selectByExampleQueryId="true">
-        <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        <!--<table tableName="assessment"-->
+            <!--domainObjectName="Assessment"-->
+            <!--enableCountByExample="true"-->
+            <!--enableUpdateByExample="true"-->
+            <!--enableDeleteByExample="true"-->
+            <!--enableSelectByExample="true"-->
+            <!--selectByExampleQueryId="true">-->
+        <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!-- 评估映射表 -->
+        <!--<table tableName="grade"-->
+               <!--domainObjectName="Grade"-->
+               <!--enableCountByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--</table>-->
+        <!-- 指标映射表 -->
+        <!--<table tableName="quota"-->
+               <!--domainObjectName="Quota"-->
+               <!--enableCountByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--</table>-->
+        <!-- 指标自评条目映射表 -->
+        <!--<table tableName="quota_self_evaluation_entry"-->
+               <!--domainObjectName="QuotaSelfEvaluationEntry"-->
+               <!--enableCountByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+        <!--</table>-->
+        <!-- 指标问卷问题映射表 -->
+        <table tableName="quota_problem"
+               domainObjectName="QuotaProblem"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        </table>
+        <!-- 指标文件条目映射表 -->
+        <table tableName="quota_policy_document_entry"
+               domainObjectName="QuotaPolicyDocumentEntry"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
         </table>
     </context>
 </generatorConfiguration>

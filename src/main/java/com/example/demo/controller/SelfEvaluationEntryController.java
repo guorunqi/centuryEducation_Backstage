@@ -47,6 +47,28 @@ public class SelfEvaluationEntryController {
         return controllerReturn;
     }
     @ResponseBody
+    @RequestMapping(value = "/querySelfEvaluationEntryBySelfEvaluationID",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
+    public ControllerReturn querySelfEvaluationEntryBySelfEvaluationID(@RequestBody String data){
+
+        ControllerReturn controllerReturn=new ControllerReturn();
+        try{
+            String id= JSONObject.parseObject(data).get("id").toString();
+            if(!StringUtils.isBlank(id)){
+                List<SelfEvaluationEntry> selfEvaluationEntrys=selfEvaluationEntryService.querySelfEvaluationEntryBySelfEvaluationID(id);
+                controllerReturn.setCode("true");
+                controllerReturn.setData(selfEvaluationEntrys);
+            }else{
+                controllerReturn.setCode("false");
+                controllerReturn.setData("id参数不正确");
+            }
+        }catch (Exception e){
+            controllerReturn.setCode("false");
+            controllerReturn.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return controllerReturn;
+    }
+    @ResponseBody
     @RequestMapping(value = "/querySelfEvaluationEntryByID",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
     public ControllerReturn querySelfEvaluationEntryByID(@RequestBody String data){
 
