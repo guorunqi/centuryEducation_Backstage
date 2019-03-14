@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.QuotaProblemMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.domain.QuotaProblemKey" >
+    <id column="problem_id" property="problemId" jdbcType="VARCHAR" />
+    <id column="quota_id" property="quotaId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    problem_id, quota_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.domain.QuotaProblemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from quota_problem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.example.demo.domain.QuotaProblemKey" >
+    delete from quota_problem
+    where problem_id = #{problemId,jdbcType=VARCHAR}
+      and quota_id = #{quotaId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.demo.domain.QuotaProblemExample" >
+    delete from quota_problem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.domain.QuotaProblemKey" >
+    insert into quota_problem (problem_id, quota_id)
+    values (#{problemId,jdbcType=VARCHAR}, #{quotaId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.domain.QuotaProblemKey" >
+    insert into quota_problem
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="problemId != null" >
+        problem_id,
+      </if>
+      <if test="quotaId != null" >
+        quota_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="problemId != null" >
+        #{problemId,jdbcType=VARCHAR},
+      </if>
+      <if test="quotaId != null" >
+        #{quotaId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.demo.domain.QuotaProblemExample" resultType="java.lang.Integer" >
+    select count(*) from quota_problem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update quota_problem
+    <set >
+      <if test="record.problemId != null" >
+        problem_id = #{record.problemId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quotaId != null" >
+        quota_id = #{record.quotaId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update quota_problem
+    set problem_id = #{record.problemId,jdbcType=VARCHAR},
+      quota_id = #{record.quotaId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <select id="queryQuotaProblemByQuotaID" resultType="java.util.HashMap" parameterType="java.lang.String" >
+    select
+        qp.*,
+        q.name wjmc,
+        p.content wtmc
+    FROM
+        quota_problem qp
+        LEFT JOIN problem p on qp.problem_id=p.id
+        LEFT JOIN questionnaire q on p.questionnaire_id=q.id
+    WHERE qp.quota_id=#{id,jdbcType=VARCHAR}
+  </select>
+
+</mapper>
