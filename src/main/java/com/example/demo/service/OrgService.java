@@ -44,4 +44,7 @@ import java.util.List;
         public Organization selectOrgByOrgId(String id){
             return  organizationMapper.selectByPrimaryKey(id);
         }
+        public List<Organization> queryOrgByProjectID(String id){
+            return organizationMapper.queryOrgByProjectID(id);
+        }
 }
