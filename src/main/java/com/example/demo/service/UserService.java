@@ -48,7 +48,6 @@ public class UserService {
             userMapper.updateByPrimaryKeySelective(user);
         }else {
             user.setId(CommonUtil.getPrimaryKey());
-            user.setRoleId("1");
             userMapper.insert(user);
             orgUser.setUserId(user.getId());
             orgUser.setId(CommonUtil.getPrimaryKey());
