@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.answerResultMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.domain.answerResult" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="answer_id" property="answerId" jdbcType="VARCHAR" />
+    <result column="project_org_id" property="projectOrgId" jdbcType="VARCHAR" />
+    <result column="selection_rate" property="selectionRate" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, answer_id, project_org_id, selection_rate
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.domain.answerResultExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from answer_result
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from answer_result
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from answer_result
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.demo.domain.answerResultExample" >
+    delete from answer_result
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.domain.answerResult" useGeneratedKeys="true" keyProperty="id" >
+    insert into answer_result (id,answer_id, project_org_id, selection_rate
+      )
+    values (#{id,jdbcType=VARCHAR},#{answerId,jdbcType=VARCHAR}, #{projectOrgId,jdbcType=VARCHAR}, #{selectionRate,jdbcType=REAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.domain.answerResult" useGeneratedKeys="true" keyProperty="id" >
+    insert into answer_result
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="answerId != null" >
+        answer_id,
+      </if>
+      <if test="projectOrgId != null" >
+        project_org_id,
+      </if>
+      <if test="selectionRate != null" >
+        selection_rate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="answerId != null" >
+        #{answerId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectOrgId != null" >
+        #{projectOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="selectionRate != null" >
+        #{selectionRate,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.demo.domain.answerResultExample" resultType="java.lang.Integer" >
+    select count(*) from answer_result
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update answer_result
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerId != null" >
+        answer_id = #{record.answerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectOrgId != null" >
+        project_org_id = #{record.projectOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.selectionRate != null" >
+        selection_rate = #{record.selectionRate,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update answer_result
+    set id = #{record.id,jdbcType=VARCHAR},
+      answer_id = #{record.answerId,jdbcType=VARCHAR},
+      project_org_id = #{record.projectOrgId,jdbcType=VARCHAR},
+      selection_rate = #{record.selectionRate,jdbcType=REAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.domain.answerResult" >
+    update answer_result
+    <set >
+      <if test="answerId != null" >
+        answer_id = #{answerId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectOrgId != null" >
+        project_org_id = #{projectOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="selectionRate != null" >
+        selection_rate = #{selectionRate,jdbcType=REAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.domain.answerResult" >
+    update answer_result
+    set answer_id = #{answerId,jdbcType=VARCHAR},
+      project_org_id = #{projectOrgId,jdbcType=VARCHAR},
+      selection_rate = #{selectionRate,jdbcType=REAL}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
