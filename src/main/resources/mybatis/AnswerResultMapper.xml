@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.demo.dao.answerResultMapper" >
-  <resultMap id="BaseResultMap" type="com.example.demo.domain.answerResult" >
+<mapper namespace="com.example.demo.dao.AnswerResultMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.domain.AnswerResult" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="answer_id" property="answerId" jdbcType="VARCHAR" />
     <result column="project_org_id" property="projectOrgId" jdbcType="VARCHAR" />
@@ -68,7 +68,7 @@
   <sql id="Base_Column_List" >
     id, answer_id, project_org_id, selection_rate
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.domain.answerResultExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.domain.AnswerResultExample" >
     select
     <if test="distinct" >
       distinct
@@ -92,19 +92,19 @@
     delete from answer_result
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.example.demo.domain.answerResultExample" >
+  <delete id="deleteByExample" parameterType="com.example.demo.domain.AnswerResultExample" >
     delete from answer_result
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.example.demo.domain.answerResult" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insert" parameterType="com.example.demo.domain.AnswerResult" useGeneratedKeys="true" keyProperty="id" >
     insert into answer_result (id,answer_id, project_org_id, selection_rate
       )
     values (#{id,jdbcType=VARCHAR},#{answerId,jdbcType=VARCHAR}, #{projectOrgId,jdbcType=VARCHAR}, #{selectionRate,jdbcType=REAL}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.example.demo.domain.answerResult" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insertSelective" parameterType="com.example.demo.domain.AnswerResult" useGeneratedKeys="true" keyProperty="id" >
     insert into answer_result
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="answerId != null" >
@@ -129,7 +129,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.example.demo.domain.answerResultExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.example.demo.domain.AnswerResultExample" resultType="java.lang.Integer" >
     select count(*) from answer_result
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -165,7 +165,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.domain.answerResult" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.domain.AnswerResult" >
     update answer_result
     <set >
       <if test="answerId != null" >
@@ -180,7 +180,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.demo.domain.answerResult" >
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.domain.AnswerResult" >
     update answer_result
     set answer_id = #{answerId,jdbcType=VARCHAR},
       project_org_id = #{projectOrgId,jdbcType=VARCHAR},

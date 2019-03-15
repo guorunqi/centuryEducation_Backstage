@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.dao.answerResultMapper;
-import com.example.demo.domain.answerResult;
+import com.example.demo.dao.AnswerResultMapper;
+import com.example.demo.domain.AnswerResult;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -10,9 +10,9 @@ import javax.annotation.Resource;
 public class AnswerResultService {
 
     @Resource
-    private answerResultMapper answerResultMapper;
+    private AnswerResultMapper answerResultMapper;
 
-    public int insert (answerResult answerResult){
+    public int insert (AnswerResult answerResult){
         return answerResultMapper.insert(answerResult);
     }
 }

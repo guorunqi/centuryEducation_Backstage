@@ -6,7 +6,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.demo.domain.*;
 import com.example.demo.service.*;
 import com.example.demo.util.CommonUtil;
-import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -352,7 +351,7 @@ public class QuestionnaireManagementController {
             for (int i=0;i<SelectionRateList.size();i++){
                 Map SelectionRateMap = (Map) SelectionRateList.get(i);
                 Map rateMap = (Map) SelectionRateMap.get("org");
-                answerResult answerResult = new answerResult();
+                AnswerResult answerResult = new AnswerResult();
                 answerResult.setId(CommonUtil.getPrimaryKey());
                 answerResult.setProjectOrgId(rateMap.get("projectOrgId").toString());
                 answerResult.setAnswerId(SelectionRateMap.get("id").toString());

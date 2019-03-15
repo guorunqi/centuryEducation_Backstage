@@ -3,14 +3,14 @@ package com.example.demo.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class answerResultExample {
+public class AnswerResultExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public answerResultExample() {
+    public AnswerResultExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

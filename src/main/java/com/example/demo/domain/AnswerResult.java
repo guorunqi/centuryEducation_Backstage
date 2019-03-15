@@ -1,6 +1,6 @@
 package com.example.demo.domain;
 
-public class answerResult {
+public class AnswerResult {
     private String id;
 
     private String answerId;
