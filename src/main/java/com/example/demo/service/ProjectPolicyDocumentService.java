@@ -18,11 +18,14 @@ public class ProjectPolicyDocumentService {
      * @return
      */
     public int insertProjectPolicyDocument(ProjectPolicyDocumentKey projectPolicyDocumentKey){
-        int i = projectPolicyDocumentMapper.insert(projectPolicyDocumentKey);
-        if(i > 0){
+        try{
+            int i = projectPolicyDocumentMapper.insert(projectPolicyDocumentKey);
             return  i;
+        }catch (Exception e){
+            return  0;
         }
-        return  0;
+
+
     }
 
     /**
@@ -33,11 +36,7 @@ public class ProjectPolicyDocumentService {
     public List<ProjectPolicyDocumentKey> selectPolicyDocumentByProjectId(String projectId){
         ProjectPolicyDocumentExample projectPolicyDocumentExample = new ProjectPolicyDocumentExample();
         projectPolicyDocumentExample.or().andProjectIdEqualTo(projectId);
-        List<ProjectPolicyDocumentKey> projectPolicyDocument =  projectPolicyDocumentMapper.selectByExample(projectPolicyDocumentExample);
-        if(projectPolicyDocument.size() > 0){
-            return  projectPolicyDocument;
-        }
-        return  null;
+        return projectPolicyDocumentMapper.selectByExample(projectPolicyDocumentExample);
     }
 
     /**

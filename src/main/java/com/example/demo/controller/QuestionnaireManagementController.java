@@ -134,6 +134,8 @@ public class QuestionnaireManagementController {
                         problemMap.put("answerData",AnswerList);
                         questionnaireMap.put("QuestionnaireData",problemMap);
                     }
+                }else{
+                    questionnaireMap.put("QuestionnaireData",new ArrayList<>());
                 }
             }
 

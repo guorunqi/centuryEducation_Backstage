@@ -44,6 +44,10 @@ public class ProjectOrgUserService {
      * @return
      */
     public int insertProjectOrgUser(ProjectOrgUser projectOrgUser){
-        return projectOrgUserMapper.insert(projectOrgUser);
+        try{
+            return projectOrgUserMapper.insert(projectOrgUser);
+        }catch (Exception e){
+            return 0;
+        }
     }
 }

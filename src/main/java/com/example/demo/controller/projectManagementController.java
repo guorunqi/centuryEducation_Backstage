@@ -139,8 +139,12 @@ public class projectManagementController {
             //根据项目ID，删除项目文件表
             projectPolicyDocumentService.deleteProjectPolicyDocument(projectId);
             //根据项目ID删除项目
-            loginService.deleteProjectByProjectId(projectId);
-
+            int i = loginService.deleteProjectByProjectId(projectId);
+            if(i == 0){
+                controllerReturn.setCode("false");
+                controllerReturn.setMessage("删除失败，该项目已被使用");
+                return controllerReturn;
+            }
             controllerReturn.setCode("true");
             return controllerReturn;
         }catch (Exception e){
@@ -166,40 +170,42 @@ public class projectManagementController {
             String[] Orgs;
             List<PolicyDocument> PolicyDocumentList = new ArrayList<PolicyDocument>();
             List<Map> SpecialistList = new ArrayList<Map>();
+            Map<String,Object> mapData = new HashMap();
 
+            mapData.put( "project" , project );
             //查询org并转成数组
             List<ProjectOrgUser> projectOrgUser = projectOrgUserService.selectOrgUserByProjectId(projectId);
             // List<ProjectOrg> ProjectOrgs = projectOrgService.selectOrgByProjectId(projectId);
             Orgs =new String[projectOrgUser.size()];
-            for(int i=0 ; i<projectOrgUser.size() ; i++){
-                Map map = new HashMap();
-                Organization Org = orgServer.selectOrgByOrgId(projectOrgUser.get(i).getOrgId());
-                Orgs[i] = Org.getCode();
-                User user = userService.selectSpecialistById(projectOrgUser.get(i).getUserId());
-                map.put("ProjectOrgUserId",projectOrgUser.get(i).getId());
-                map.put("OrgId",Org.getId());
-                map.put("OrgName",Org.getName());
-                map.put("OrgCode",Org.getCode());
-                map.put("userId",user.getId());
-                map.put("userName",user.getName());
-                map.put("userPhone",user.getPhone());
-                map.put("userRemarks",user.getRemarks());
-                SpecialistList.add(map);
+            mapData.put( "Orgs" , Orgs );
+            if(projectOrgUser.size()>0){
+                for(int i=0 ; i<projectOrgUser.size() ; i++){
+                    Map map = new HashMap();
+                    Organization Org = orgServer.selectOrgByOrgId(projectOrgUser.get(i).getOrgId());
+                    Orgs[i] = Org.getCode();
+                    User user = userService.selectSpecialistById(projectOrgUser.get(i).getUserId());
+                    map.put("ProjectOrgUserId",projectOrgUser.get(i).getId());
+                    map.put("OrgId",Org.getId());
+                    map.put("OrgName",Org.getName());
+                    map.put("OrgCode",Org.getCode());
+                    map.put("userId",user.getId());
+                    map.put("userName",user.getName());
+                    map.put("userPhone",user.getPhone());
+                    map.put("userRemarks",user.getRemarks());
+                    SpecialistList.add(map);
+                }
+                mapData.put( "SpecialistList" , SpecialistList );
             }
             //根据项目ID 查询相关文件
             List<ProjectPolicyDocumentKey> projectPolicyDocuments = projectPolicyDocumentService.selectPolicyDocumentByProjectId(projectId);
-            for(ProjectPolicyDocumentKey projectPolicyDocument : projectPolicyDocuments){
-                PolicyDocument policyDocument = policyDocumentService.selectPolicyDocumentById(projectPolicyDocument.getPolicyDocumentId());
-                PolicyDocumentList.add(policyDocument);
+            if(projectPolicyDocuments.size()>0){
+                for(ProjectPolicyDocumentKey projectPolicyDocument : projectPolicyDocuments){
+                    PolicyDocument policyDocument = policyDocumentService.selectPolicyDocumentById(projectPolicyDocument.getPolicyDocumentId());
+                    PolicyDocumentList.add(policyDocument);
+                }
+                mapData.put( "PolicyDocumentList" , PolicyDocumentList );
             }
-
-            Map<String,Object> map = new HashMap();
-            map.put( "project" , project );
-            map.put( "Orgs" , Orgs );
-            map.put( "PolicyDocumentList" , PolicyDocumentList );
-            map.put( "SpecialistList" , SpecialistList );
-
-            controllerReturn.setData(map);
+            controllerReturn.setData(mapData);
             controllerReturn.setCode("true");
             return controllerReturn;
         }catch (Exception e){
@@ -225,7 +231,12 @@ public class projectManagementController {
             ProjectPolicyDocumentKey projectPolicyDocumentKey = new ProjectPolicyDocumentKey();
             projectPolicyDocumentKey.setProjectId(projectId);
             projectPolicyDocumentKey.setPolicyDocumentId(policyDocumentId);
-            projectPolicyDocumentService.insertProjectPolicyDocument(projectPolicyDocumentKey);
+            int i = projectPolicyDocumentService.insertProjectPolicyDocument(projectPolicyDocumentKey);
+            if(i == 0){
+                controllerReturn.setCode("false");
+                controllerReturn.setMessage("数据重复");
+                return controllerReturn;
+            }
             controllerReturn.setCode("true");
             return controllerReturn;
         }catch (Exception e){
@@ -302,8 +313,11 @@ public class projectManagementController {
             projectOrgUser.setUserId(userId);
             projectOrgUser.setOrgId(organization.getId());
             projectOrgUser.setProId(projectId);
-            projectOrgUserService.insertProjectOrgUser(projectOrgUser);
-
+            int i =projectOrgUserService.insertProjectOrgUser(projectOrgUser);
+            if(i == 0){
+                controllerReturn.setCode("false");
+                controllerReturn.setMessage("数据保存失败");
+            }
             controllerReturn.setCode("true");
             return controllerReturn;
         }catch (Exception e){

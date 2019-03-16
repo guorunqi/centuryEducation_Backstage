@@ -84,7 +84,11 @@ public class projectManagementService {
      * @return
      */
     public int deleteProjectByProjectId(String projectId){
-        return  projectMapper.deleteByPrimaryKey(projectId);
+        try{
+            return  projectMapper.deleteByPrimaryKey(projectId);
+        }catch (Exception e){
+            return 0;
+        }
     }
 
     /**

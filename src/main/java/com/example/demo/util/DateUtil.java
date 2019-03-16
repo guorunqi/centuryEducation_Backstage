@@ -18,7 +18,7 @@ public class DateUtil {
      */
     public Date getDateFormat(String data) throws ParseException {
         String TimeStart = data.replace("Z", " UTC");
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS Z");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date FormDate = format.parse(TimeStart);
         return FormDate;
     }

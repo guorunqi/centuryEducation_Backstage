@@ -18,7 +18,7 @@ public class PolicyDocumentService {
      */
     public List<PolicyDocument> selectAllPolicyDocument(){
         PolicyDocumentExample policyDocumentExample = new PolicyDocumentExample();
-        policyDocumentExample.or().andIdEqualTo("1");
+
         List<PolicyDocument> selectAllPolicyDocumentList = policyDocumentMapper.selectByExample(policyDocumentExample);
         if(selectAllPolicyDocumentList.size() > 0){
             return  selectAllPolicyDocumentList;
