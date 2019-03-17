@@ -336,7 +336,7 @@
     </if>
     <if test="proName != null and proName != ''">
       and project_id = (
-        select id from project where `name`= #{name,jdbcType=VARCHAR} LIMIT 1
+        select id from project where `name`= #{proName,jdbcType=VARCHAR} LIMIT 1
       )
     </if>
     <if test="crowdOriented != null and crowdOriented != ''">

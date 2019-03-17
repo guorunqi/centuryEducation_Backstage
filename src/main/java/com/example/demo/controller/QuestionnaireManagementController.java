@@ -89,7 +89,7 @@ public class QuestionnaireManagementController {
                         if(rtnProblem > 0){
                             if(answerData.size() > 0){
                                 for (int j=0;j<answerData.size();j++){
-                                    Map answerMap = (Map)answerData.get(i);
+                                    Map answerMap = (Map)answerData.get(0);
                                     Answer answer = new Answer();
                                     answer.setId(CommonUtil.getPrimaryKey());
                                     answer.setCode((String) answerMap.get("code"));

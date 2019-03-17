@@ -5,6 +5,7 @@ import com.example.demo.domain.*;
 import com.example.demo.service.*;
 import com.example.demo.util.CommonUtil;
 import com.example.demo.util.DateUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +37,32 @@ public class projectManagementController {
     @ResponseBody
     public ControllerReturn loginVeify(){
         ControllerReturn controllerReturn=new ControllerReturn();
+
         try {
+            List list = new ArrayList();
             List<Project> projectList = loginService.selectAllProject();
-            if(projectList != null){
-                controllerReturn.setData(projectList);
+            if(projectList.size()>0) {
+                for (Project project : projectList) {
+                    String proId = project.getId();
+                    Map map = CommonUtil.objectToMap(project);;
+                    List Orgs  = new ArrayList();
+                    List<ProjectOrgUser> ProjectOrgUserList = projectOrgUserService.selectOrgUserByProjectId(proId);
+                    if(ProjectOrgUserList.size()>0){
+                        for (ProjectOrgUser ProjectOrgUser:ProjectOrgUserList){
+                            String orhId = ProjectOrgUser.getOrgId();
+                            Organization Org = orgServer.selectOrgByOrgId(orhId);
+                            if (!Orgs.contains(Org.getName())){
+                                Orgs.add(Org.getName());
+                            }
+                        }
+                        String org = StringUtils.join(Orgs, ",");
+                        map.put("org",org);
+                    }
+                    list.add(map);
+                }
+            }
+            if(list != null){
+                controllerReturn.setData(list);
                 controllerReturn.setCode("true");
                 return controllerReturn;
             }else{
@@ -76,6 +99,7 @@ public class projectManagementController {
             String ProjectPrimaryKey = CommonUtil.getPrimaryKey();
             Project project = new Project();
             project.setId(ProjectPrimaryKey);
+            project.setStutas("wfb");
             project.setClassOne(projectObj.getString("classOne"));
             project.setClassTwo(projectObj.getString("classTwo"));
             project.setName(projectObj.getString("name"));
@@ -374,8 +398,29 @@ public class projectManagementController {
             }else{
                 projectList = loginService.selectByCondition(name,classOne,status,classTwo,orgs);
             }
+            List list = new ArrayList();
+            if(projectList.size()>0) {
+                for (Project project : projectList) {
+                    String proId = project.getId();
+                    Map map = CommonUtil.objectToMap(project);;
+                    List Orgs  = new ArrayList();
+                    List<ProjectOrgUser> ProjectOrgUserList = projectOrgUserService.selectOrgUserByProjectId(proId);
+                    if(ProjectOrgUserList.size()>0){
+                        for (ProjectOrgUser ProjectOrgUser:ProjectOrgUserList){
+                            String orhId = ProjectOrgUser.getOrgId();
+                            Organization Org = orgServer.selectOrgByOrgId(orhId);
+                            if (!Orgs.contains(Org.getName())){
+                                Orgs.add(Org.getName());
+                            }
+                        }
+                        String org = StringUtils.join(Orgs, ",");
+                        map.put("org",org);
+                    }
+                    list.add(map);
+                }
+            }
 
-            controllerReturn.setData(projectList);
+            controllerReturn.setData(list);
             controllerReturn.setCode("true");
             return controllerReturn;
         }catch (Exception e){

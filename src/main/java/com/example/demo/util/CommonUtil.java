@@ -5,9 +5,9 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class CommonUtil {
 
@@ -57,6 +57,30 @@ public class CommonUtil {
         }
         return map;
     }
-
+    /**
+     * 日期格式字符串转换成时间戳
+     * @param date 字符串日期
+     * @param format 如：yyyy-MM-dd HH:mm:ss
+     * @return
+     */
+    public static String date2TimeStamp(String date_str,String format){
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(format);
+            return String.valueOf(sdf.parse(date_str).getTime()/1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+    public static Date StringToDate(String dateString){
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date date = null;
+        try{
+            return date = format.parse(dateString);
+        } catch(Exception e){
+            System.out.println("error");
+        }
+        return null;
+    }
 
 }
