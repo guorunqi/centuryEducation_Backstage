@@ -98,9 +98,9 @@ public class SelfEvaluationEntryController {
         try{
             String jsonString=JSONObject.parseObject(data).get("data").toString();
             SelfEvaluationEntry selfEvaluationEntry=JSONObject.parseObject(jsonString,SelfEvaluationEntry.class);
-            Boolean sign=selfEvaluationEntryService.saveSelfEvaluation(selfEvaluationEntry);
+            String key=selfEvaluationEntryService.saveSelfEvaluation(selfEvaluationEntry);
             controllerReturn.setCode("true");
-            controllerReturn.setData(sign);
+            controllerReturn.setData(key);
         }catch (Exception e){
             controllerReturn.setCode("false");
             controllerReturn.setMessage(e.toString());

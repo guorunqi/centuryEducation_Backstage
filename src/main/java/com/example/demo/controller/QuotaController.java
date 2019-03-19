@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.domain.ControllerReturn;
 import com.example.demo.domain.Quota;
+import com.example.demo.service.ProjectOrgUserService;
 import com.example.demo.service.QuotaService;
 import com.example.demo.util.TreeTablePojo;
 import com.example.demo.util.TreeTableUtil;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -25,6 +27,8 @@ import java.util.List;
 public class QuotaController {
     @Autowired
     private QuotaService quotaService;
+    @Autowired
+    private ProjectOrgUserService projectOrgUserService;
     @ResponseBody
     @RequestMapping(value = "/queryQuotaByID",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
     public ControllerReturn queryQuotaByID(@RequestBody String data){
@@ -113,4 +117,27 @@ public class QuotaController {
         }
         return controllerReturn;
     }
+    @ResponseBody
+    @RequestMapping(value = "/queryProjectOrgUserByProjectID",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
+    public ControllerReturn queryProjectOrgUserByProjectID(@RequestBody String data){
+
+        ControllerReturn controllerReturn=new ControllerReturn();
+        try{
+            String projectID= JSONObject.parseObject(data).get("projectID").toString();
+            if(!StringUtils.isBlank(projectID)){
+                List<HashMap> list=projectOrgUserService.queryProjectOrgUserByProjectID(projectID);
+                controllerReturn.setCode("true");
+                controllerReturn.setData(list);
+            }else{
+                controllerReturn.setCode("false");
+                controllerReturn.setData("id参数不正确");
+            }
+        }catch (Exception e){
+            controllerReturn.setCode("false");
+            controllerReturn.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return controllerReturn;
+    }
+
 }

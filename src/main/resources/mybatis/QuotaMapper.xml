@@ -297,4 +297,15 @@
       status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="queryQuotaExpertByProjectId" resultType="java.util.HashMap" parameterType="java.lang.String" >
+    select
+    qpde.*,
+    pd.policy_name wjmc,
+    pde.name tmmc
+    FROM
+    quota_policy_document_entry qpde
+    LEFT JOIN policy_document_entry pde ON qpde.policy_document_entry_id=pde.id
+    LEFT JOIN policy_document pd ON pde.policy_document_id=pd.id
+    where qpde.quota_id=#{id,jdbcType=VARCHAR}
+  </select>
 </mapper>

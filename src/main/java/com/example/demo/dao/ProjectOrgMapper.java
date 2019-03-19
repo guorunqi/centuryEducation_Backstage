@@ -2,6 +2,8 @@ package com.example.demo.dao;
 
 import com.example.demo.domain.ProjectOrg;
 import com.example.demo.domain.ProjectOrgExample;
+
+import java.util.HashMap;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +29,10 @@ public interface ProjectOrgMapper {
     int updateByPrimaryKeySelective(ProjectOrg record);
 
     int updateByPrimaryKey(ProjectOrg record);
+
+    List<HashMap> queryProjectOrgByProjectID(@Param("projectID") String projectID);
+
+    List<HashMap> queryProjectOrgByProjectIDAndQuotaID(@Param("projectID") String projectID,@Param("quotaID") String quotaID);
+
+
 }

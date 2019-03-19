@@ -42,7 +42,7 @@ public class AssessmentService {
 //            return false;
 //        }
 //    }
-    public Boolean saveAssessment(Assessment assessment, List<Grade> list){
+    public String saveAssessment(Assessment assessment, List<Grade> list){
         try {
             String id;
             if(StringUtils.isBlank(assessment.getId())){
@@ -58,10 +58,10 @@ public class AssessmentService {
                 grade.setAssessmentId(id);
                 gradeMapper.insert(grade);
             }
-            return true;
+            return assessment.getId();
         }catch (Exception e){
             e.printStackTrace();
-            return false;
+            return null;
         }
 
     }

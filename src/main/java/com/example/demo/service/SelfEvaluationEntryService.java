@@ -43,7 +43,7 @@ public class SelfEvaluationEntryService {
             return false;
         }
     }
-    public Boolean saveSelfEvaluation(SelfEvaluationEntry selfEvaluationEntry){
+    public String saveSelfEvaluation(SelfEvaluationEntry selfEvaluationEntry){
         try {
             if(StringUtils.isBlank(selfEvaluationEntry.getId())){
                 selfEvaluationEntry.setId(CommonUtil.getPrimaryKey());
@@ -51,10 +51,10 @@ public class SelfEvaluationEntryService {
             }else {
                 selfEvaluationEntryMapper.updateByPrimaryKeySelective(selfEvaluationEntry);
             }
-            return true;
+            return selfEvaluationEntry.getId();
         }catch (Exception e){
             e.printStackTrace();
-            return false;
+            return "-1";
         }
 
     }

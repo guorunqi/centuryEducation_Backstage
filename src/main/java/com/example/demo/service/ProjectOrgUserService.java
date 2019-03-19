@@ -6,6 +6,7 @@ import com.example.demo.domain.ProjectOrgUserExample;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -48,6 +49,13 @@ public class ProjectOrgUserService {
             return projectOrgUserMapper.insert(projectOrgUser);
         }catch (Exception e){
             return 0;
+        }
+    }
+    public List<HashMap> queryProjectOrgUserByProjectID(String projectID){
+        try {
+            return projectOrgUserMapper.queryProjectOrgUserByProjectID(projectID);
+        }catch (Exception e){
+            return null;
         }
     }
 }

@@ -171,4 +171,34 @@
       pro_id = #{proId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="queryProjectOrgByProjectID" resultType="java.util.HashMap" parameterType="java.lang.String">
+    SELECT po.*,o.name
+    FROM project_org po
+    LEFT JOIN organization o on po.org_id=o.id
+    WHERE po.pro_id=#{projectID,jdbcType=VARCHAR}
+  </select>
+  <select id="queryProjectOrgByProjectIDAndQuotaID" resultType="java.util.HashMap" parameterType="java.lang.String">
+    select
+			 a2.id id,
+			 a1.orgId orgId,
+			 a1.orgName orgName,
+			 a2.userId userId,
+			 a2.userName userName
+    FROM
+    (select p.id id,
+                    p.org_id orgId,
+                    o.name orgName
+    from project_org p
+    LEFT JOIN organization o on p.org_id=o.id
+    where p.pro_id=#{projectID,jdbcType=VARCHAR}) a1
+    LEFT JOIN
+    (select qr.id id,
+                 qr.expert_id userId,
+                 u.name userName,
+                 qr.project_org_id poId
+    from quota_result qr
+    LEFT JOIN user u on qr.expert_id=u.id
+    where qr.quota_id=#{quotaID,jdbcType=VARCHAR}) a2
+    ON a1.id=a2.poId
+  </select>
 </mapper>

@@ -39,14 +39,20 @@ public class AssessmentController {
             String jsonArade= JSONObject.parseObject(jsonString).get("arades").toString();
             Assessment assessment=JSONObject.parseObject(jsonAssessment,Assessment.class);
             List<Grade> grades= JSON.parseArray(jsonArade,Grade.class);
-            Boolean sign=false;
-            if(gradeService.deleteGradesByAssessmentID(assessment.getId())){
-                sign=assessmentService.saveAssessment(assessment,grades);
+            String key=null;
+            if(StringUtils.isBlank(assessment.getId())){
+                key=assessmentService.saveAssessment(assessment,grades);
+            }else if(gradeService.deleteGradesByAssessmentID(assessment.getId())){
+                key=assessmentService.saveAssessment(assessment,grades);
             }
 
+            if(StringUtils.isBlank(key)){
+                controllerReturn.setCode("false");
+            }else{
+                controllerReturn.setCode("true");
+            }
 
-            controllerReturn.setCode(sign.toString());
-            controllerReturn.setData(sign);
+            controllerReturn.setData(key);
         }catch (Exception e){
             controllerReturn.setCode("false");
             controllerReturn.setMessage(e.toString());

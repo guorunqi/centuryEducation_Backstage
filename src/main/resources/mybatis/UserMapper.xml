@@ -11,7 +11,7 @@
     <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
     <result column="password_error_number" jdbcType="INTEGER" property="passwordErrorNumber" />
-    <result column="phone" jdbcType="INTEGER" property="phone" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="education" jdbcType="VARCHAR" property="education" />
     <result column="political_outlook" jdbcType="VARCHAR" property="politicalOutlook" />
@@ -135,7 +135,7 @@
       )
     values (#{id,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
       #{name,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
-      #{lastLoginTime,jdbcType=TIMESTAMP}, #{passwordErrorNumber,jdbcType=INTEGER}, #{phone,jdbcType=INTEGER}, 
+      #{lastLoginTime,jdbcType=TIMESTAMP}, #{passwordErrorNumber,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR},
       #{email,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, #{politicalOutlook,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{identificationNumber,jdbcType=VARCHAR}, #{identificationType,jdbcType=VARCHAR}, 
       #{birthDate,jdbcType=DATE}, #{sex,jdbcType=VARCHAR}, #{picturePath,jdbcType=VARCHAR}, 
@@ -394,7 +394,7 @@
       status = #{record.status,jdbcType=VARCHAR},
       last_login_time = #{record.lastLoginTime,jdbcType=TIMESTAMP},
       password_error_number = #{record.passwordErrorNumber,jdbcType=INTEGER},
-      phone = #{record.phone,jdbcType=INTEGER},
+      phone = #{record.phone,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
       education = #{record.education,jdbcType=VARCHAR},
       political_outlook = #{record.politicalOutlook,jdbcType=VARCHAR},
@@ -502,7 +502,7 @@
       status = #{status,jdbcType=VARCHAR},
       last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
       password_error_number = #{passwordErrorNumber,jdbcType=INTEGER},
-      phone = #{phone,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       education = #{education,jdbcType=VARCHAR},
       political_outlook = #{politicalOutlook,jdbcType=VARCHAR},

@@ -188,4 +188,10 @@
       user_id = #{userId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="queryProjectOrgUserByProjectID" resultType="java.util.HashMap" parameterType="java.lang.String" >
+    select pou.*,u.name
+    from project_org_user pou
+    LEFT JOIN user u on u.id=pou.user_id
+    where pou.pro_id=#{projectID,jdbcType=VARCHAR}
+  </select>
 </mapper>
