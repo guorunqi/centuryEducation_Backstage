@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.domain.ControllerReturn;
+import com.example.demo.domain.ProjectOrgUser;
 import com.example.demo.domain.Quota;
 import com.example.demo.service.ProjectOrgUserService;
 import com.example.demo.service.QuotaService;
@@ -59,9 +61,15 @@ public class QuotaController {
         try{
             String jsonString=JSONObject.parseObject(data).get("data").toString();
             Quota quota=JSONObject.parseObject(jsonString,Quota.class);
-            Boolean sign=quotaService.saveQuota(quota);
-            controllerReturn.setCode("true");
-            controllerReturn.setData(sign);
+            Quota quota1=quotaService.saveQuota(quota);
+            if(quota1!=null){
+                controllerReturn.setCode("true");
+                controllerReturn.setData(quota1);
+            }else{
+                controllerReturn.setCode("false");
+                controllerReturn.setData(null);
+            }
+
         }catch (Exception e){
             controllerReturn.setCode("false");
             controllerReturn.setMessage(e.toString());
@@ -131,6 +139,29 @@ public class QuotaController {
             }else{
                 controllerReturn.setCode("false");
                 controllerReturn.setData("id参数不正确");
+            }
+        }catch (Exception e){
+            controllerReturn.setCode("false");
+            controllerReturn.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return controllerReturn;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/saveProjectOrgUsers",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
+    public ControllerReturn saveProjectOrgUsers(@RequestBody String data){
+
+        ControllerReturn controllerReturn=new ControllerReturn();
+        try{
+            String jsonString= JSONObject.parseObject(data).get("data").toString();
+            List<ProjectOrgUser> list= JSONArray.parseArray(jsonString,ProjectOrgUser.class);
+            if(list.size()>0){
+                Boolean sign=projectOrgUserService.saveProjectOrgUsers(list);
+                controllerReturn.setCode(sign.toString());
+                controllerReturn.setData(list);
+            }else{
+                controllerReturn.setCode("false");
+                controllerReturn.setData("参数不正确");
             }
         }catch (Exception e){
             controllerReturn.setCode("false");

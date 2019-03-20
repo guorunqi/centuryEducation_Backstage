@@ -249,22 +249,32 @@
                <!--selectByExampleQueryId="true">-->
         <!--</table>-->
         <!-- 指标问卷问题映射表 -->
-        <table tableName="quota_problem"
-               domainObjectName="QuotaProblem"
+        <!--<table tableName="quota_problem"-->
+               <!--domainObjectName="QuotaProblem"-->
+               <!--enableCountByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+        <!--</table>-->
+        <!--&lt;!&ndash; 指标文件条目映射表 &ndash;&gt;-->
+        <!--<table tableName="quota_policy_document_entry"-->
+               <!--domainObjectName="QuotaPolicyDocumentEntry"-->
+               <!--enableCountByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+        <!--</table>-->
+        <!-- 指标评估结果映射表 -->
+        <table tableName="quota_result"
+               domainObjectName="QuotaResult"
                enableCountByExample="true"
                enableUpdateByExample="true"
                enableDeleteByExample="true"
                enableSelectByExample="true"
                selectByExampleQueryId="true">
-        </table>
-        <!-- 指标文件条目映射表 -->
-        <table tableName="quota_policy_document_entry"
-               domainObjectName="QuotaPolicyDocumentEntry"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
     </context>
 </generatorConfiguration>

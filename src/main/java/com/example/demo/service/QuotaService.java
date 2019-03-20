@@ -41,7 +41,7 @@ public class QuotaService {
         }
 
     }
-    public Boolean saveQuota(Quota quota){
+    public Quota saveQuota(Quota quota){
         try {
             if(StringUtils.isBlank(quota.getId())){
                 quota.setId(CommonUtil.getPrimaryKey());
@@ -49,10 +49,10 @@ public class QuotaService {
             }else {
                 quotaMapper.updateByPrimaryKeySelective(quota);
             }
-            return true;
+            return quota;
         }catch (Exception e){
             e.printStackTrace();
-            return false;
+            return null;
         }
 
     }

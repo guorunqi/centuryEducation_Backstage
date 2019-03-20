@@ -3,6 +3,8 @@ package com.example.demo.service;
 import com.example.demo.dao.ProjectOrgUserMapper;
 import com.example.demo.domain.ProjectOrgUser;
 import com.example.demo.domain.ProjectOrgUserExample;
+import com.example.demo.util.CommonUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
@@ -56,6 +58,21 @@ public class ProjectOrgUserService {
             return projectOrgUserMapper.queryProjectOrgUserByProjectID(projectID);
         }catch (Exception e){
             return null;
+        }
+    }
+    public Boolean saveProjectOrgUsers(List<ProjectOrgUser> list){
+        try {
+            for(ProjectOrgUser projectOrgUser:list){
+                if(StringUtils.isBlank(projectOrgUser.getId())){
+                    projectOrgUser.setId(CommonUtil.getPrimaryKey());
+                    projectOrgUserMapper.insert(projectOrgUser);
+                }else{
+                    projectOrgUserMapper.updateByPrimaryKey(projectOrgUser);
+                }
+            }
+            return true;
+        }catch (Exception e){
+            return false;
         }
     }
 }
