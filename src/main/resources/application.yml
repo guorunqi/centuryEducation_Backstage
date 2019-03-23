@@ -7,7 +7,7 @@ spring:
     password: laoma_2019
 server:
   address: 127.0.0.1
-  port: 8080
+  port: 8088
 ---
 mybatis:
   typeAliasesPackage: com.example.demo.domain

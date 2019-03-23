@@ -131,24 +131,23 @@
 
 
         <!-- 文件条目表 -->
-        <!--<table tableName="policy_document_entry"-->
-               <!--domainObjectName="PolicyDocumentEntry"-->
-               <!--enableCountByExample="true"-->
-               <!--enableUpdateByExample="true"-->
-               <!--enableDeleteByExample="true"-->
-               <!--enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
-        <!--</table>-->
-        <!-- 项目专家映射表 -->
-        <!--<table tableName="project_expert"
-               domainObjectName="ProjectExpert"
+       <!-- <table tableName="policy_document_entry"
+               domainObjectName="PolicyDocumentEntry"
                enableCountByExample="true"
                enableUpdateByExample="true"
                enableDeleteByExample="true"
                enableSelectByExample="true"
                selectByExampleQueryId="true">
-            <generatedKey column="expert_id" sqlStatement="JDBC" identity="true"/>
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>-->
+        <!-- 问卷问题表 -->
+        <!--<table tableName="problem"
+               domainObjectName="Problem"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>-->
         <!-- 角色映射表 -->
         <!--<table tableName="role"-->
@@ -249,6 +248,11 @@
                <!--selectByExampleQueryId="true">-->
         <!--</table>-->
         <!-- 指标问卷问题映射表 -->
+        <table tableName="quota_problem"
+               domainObjectName="QuotaProblem"
+        <!-- 问题结果表 -->
+        <table tableName="answer_result"
+               domainObjectName="answerResult"
         <!--<table tableName="quota_problem"-->
                <!--domainObjectName="QuotaProblem"-->
                <!--enableCountByExample="true"-->
@@ -274,7 +278,37 @@
                enableDeleteByExample="true"
                enableSelectByExample="true"
                selectByExampleQueryId="true">
+        </table>
+        <!-- 指标文件条目映射表 -->
+        <table tableName="quota_policy_document_entry"
+               domainObjectName="QuotaPolicyDocumentEntry"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+               enableSelectByExample="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
+        <!-- 问卷问题表 -->
+        <!--<table tableName="answer"
+               domainObjectName="Answer"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
+-->        <!-- 项目专家映射表 -->
+        <!--<table tableName="project_expert"
+               domainObjectName="ProjectExpert"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="expert_id" sqlStatement="JDBC" identity="true"/>
+        </table>-->
     </context>
 </generatorConfiguration>
