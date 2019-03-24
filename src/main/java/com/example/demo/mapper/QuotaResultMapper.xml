@@ -1,0 +1,1240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.QuotaResultMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.domain.QuotaResult">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="quota_id" jdbcType="VARCHAR" property="quotaId" />
+    <result column="project_org_id" jdbcType="VARCHAR" property="projectOrgId" />
+    <result column="results" jdbcType="VARCHAR" property="results" />
+    <result column="score" jdbcType="REAL" property="score" />
+    <result column="expert_id" jdbcType="VARCHAR" property="expertId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.demo.domain.QuotaResultWithBLOBs">
+    <result column="advantage" jdbcType="LONGVARCHAR" property="advantage" />
+    <result column="insufficient" jdbcType="LONGVARCHAR" property="insufficient" />
+    <result column="proposal" jdbcType="LONGVARCHAR" property="proposal" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, quota_id, project_org_id, results, score, expert_id
+  </sql>
+  <sql id="Blob_Column_List">
+    advantage, insufficient, proposal
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.example.demo.domain.QuotaResultExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from quota_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.example.demo.domain.QuotaResultExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from quota_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from quota_result
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from quota_result
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.demo.domain.QuotaResultExample">
+    delete from quota_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.example.demo.domain.QuotaResultWithBLOBs" useGeneratedKeys="true">
+    insert into quota_result (quota_id, project_org_id, results, 
+      score, expert_id, advantage, 
+      insufficient, proposal)
+    values (#{quotaId,jdbcType=VARCHAR}, #{projectOrgId,jdbcType=VARCHAR}, #{results,jdbcType=VARCHAR}, 
+      #{score,jdbcType=REAL}, #{expertId,jdbcType=VARCHAR}, #{advantage,jdbcType=LONGVARCHAR}, 
+      #{insufficient,jdbcType=LONGVARCHAR}, #{proposal,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" keyProperty="id" parameterType="com.example.demo.domain.QuotaResultWithBLOBs" useGeneratedKeys="true">
+    insert into quota_result
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="quotaId != null">
+        quota_id,
+      </if>
+      <if test="projectOrgId != null">
+        project_org_id,
+      </if>
+      <if test="results != null">
+        results,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="expertId != null">
+        expert_id,
+      </if>
+      <if test="advantage != null">
+        advantage,
+      </if>
+      <if test="insufficient != null">
+        insufficient,
+      </if>
+      <if test="proposal != null">
+        proposal,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="quotaId != null">
+        #{quotaId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectOrgId != null">
+        #{projectOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="results != null">
+        #{results,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=REAL},
+      </if>
+      <if test="expertId != null">
+        #{expertId,jdbcType=VARCHAR},
+      </if>
+      <if test="advantage != null">
+        #{advantage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="insufficient != null">
+        #{insufficient,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="proposal != null">
+        #{proposal,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.demo.domain.QuotaResultExample" resultType="java.lang.Integer">
+    select count(*) from quota_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update quota_result
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quotaId != null">
+        quota_id = #{record.quotaId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectOrgId != null">
+        project_org_id = #{record.projectOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.results != null">
+        results = #{record.results,jdbcType=VARCHAR},
+      </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=REAL},
+      </if>
+      <if test="record.expertId != null">
+        expert_id = #{record.expertId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advantage != null">
+        advantage = #{record.advantage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.insufficient != null">
+        insufficient = #{record.insufficient,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.proposal != null">
+        proposal = #{record.proposal,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update quota_result
+    set id = #{record.id,jdbcType=VARCHAR},
+      quota_id = #{record.quotaId,jdbcType=VARCHAR},
+      project_org_id = #{record.projectOrgId,jdbcType=VARCHAR},
+      results = #{record.results,jdbcType=VARCHAR},
+      score = #{record.score,jdbcType=REAL},
+      expert_id = #{record.expertId,jdbcType=VARCHAR},
+      advantage = #{record.advantage,jdbcType=LONGVARCHAR},
+      insufficient = #{record.insufficient,jdbcType=LONGVARCHAR},
+      proposal = #{record.proposal,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update quota_result
+    set id = #{record.id,jdbcType=VARCHAR},
+      quota_id = #{record.quotaId,jdbcType=VARCHAR},
+      project_org_id = #{record.projectOrgId,jdbcType=VARCHAR},
+      results = #{record.results,jdbcType=VARCHAR},
+      score = #{record.score,jdbcType=REAL},
+      expert_id = #{record.expertId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.domain.QuotaResultWithBLOBs">
+    update quota_result
+    <set>
+      <if test="quotaId != null">
+        quota_id = #{quotaId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectOrgId != null">
+        project_org_id = #{projectOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="results != null">
+        results = #{results,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=REAL},
+      </if>
+      <if test="expertId != null">
+        expert_id = #{expertId,jdbcType=VARCHAR},
+      </if>
+      <if test="advantage != null">
+        advantage = #{advantage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="insufficient != null">
+        insufficient = #{insufficient,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="proposal != null">
+        proposal = #{proposal,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.demo.domain.QuotaResultWithBLOBs">
+    update quota_result
+    set quota_id = #{quotaId,jdbcType=VARCHAR},
+      project_org_id = #{projectOrgId,jdbcType=VARCHAR},
+      results = #{results,jdbcType=VARCHAR},
+      score = #{score,jdbcType=REAL},
+      expert_id = #{expertId,jdbcType=VARCHAR},
+      advantage = #{advantage,jdbcType=LONGVARCHAR},
+      insufficient = #{insufficient,jdbcType=LONGVARCHAR},
+      proposal = #{proposal,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.domain.QuotaResult">
+    update quota_result
+    set quota_id = #{quotaId,jdbcType=VARCHAR},
+      project_org_id = #{projectOrgId,jdbcType=VARCHAR},
+      results = #{results,jdbcType=VARCHAR},
+      score = #{score,jdbcType=REAL},
+      expert_id = #{expertId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.example.demo.domain.QuotaResult">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="quota_id" jdbcType="VARCHAR" property="quotaId" />
+    <result column="project_org_id" jdbcType="VARCHAR" property="projectOrgId" />
+    <result column="results" jdbcType="VARCHAR" property="results" />
+    <result column="score" jdbcType="REAL" property="score" />
+    <result column="expert_id" jdbcType="VARCHAR" property="expertId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.demo.domain.QuotaResultWithBLOBs">
+    <result column="advantage" jdbcType="LONGVARCHAR" property="advantage" />
+    <result column="insufficient" jdbcType="LONGVARCHAR" property="insufficient" />
+    <result column="proposal" jdbcType="LONGVARCHAR" property="proposal" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, quota_id, project_org_id, results, score, expert_id
+  </sql>
+  <sql id="Blob_Column_List">
+    advantage, insufficient, proposal
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.example.demo.domain.QuotaResultExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from quota_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.example.demo.domain.QuotaResultExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from quota_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from quota_result
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from quota_result
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.demo.domain.QuotaResultExample">
+    delete from quota_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.example.demo.domain.QuotaResultWithBLOBs" useGeneratedKeys="true">
+    insert into quota_result (quota_id, project_org_id, results, 
+      score, expert_id, advantage, 
+      insufficient, proposal)
+    values (#{quotaId,jdbcType=VARCHAR}, #{projectOrgId,jdbcType=VARCHAR}, #{results,jdbcType=VARCHAR}, 
+      #{score,jdbcType=REAL}, #{expertId,jdbcType=VARCHAR}, #{advantage,jdbcType=LONGVARCHAR}, 
+      #{insufficient,jdbcType=LONGVARCHAR}, #{proposal,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" keyProperty="id" parameterType="com.example.demo.domain.QuotaResultWithBLOBs" useGeneratedKeys="true">
+    insert into quota_result
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="quotaId != null">
+        quota_id,
+      </if>
+      <if test="projectOrgId != null">
+        project_org_id,
+      </if>
+      <if test="results != null">
+        results,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="expertId != null">
+        expert_id,
+      </if>
+      <if test="advantage != null">
+        advantage,
+      </if>
+      <if test="insufficient != null">
+        insufficient,
+      </if>
+      <if test="proposal != null">
+        proposal,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="quotaId != null">
+        #{quotaId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectOrgId != null">
+        #{projectOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="results != null">
+        #{results,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=REAL},
+      </if>
+      <if test="expertId != null">
+        #{expertId,jdbcType=VARCHAR},
+      </if>
+      <if test="advantage != null">
+        #{advantage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="insufficient != null">
+        #{insufficient,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="proposal != null">
+        #{proposal,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.demo.domain.QuotaResultExample" resultType="java.lang.Integer">
+    select count(*) from quota_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update quota_result
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quotaId != null">
+        quota_id = #{record.quotaId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectOrgId != null">
+        project_org_id = #{record.projectOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.results != null">
+        results = #{record.results,jdbcType=VARCHAR},
+      </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=REAL},
+      </if>
+      <if test="record.expertId != null">
+        expert_id = #{record.expertId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advantage != null">
+        advantage = #{record.advantage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.insufficient != null">
+        insufficient = #{record.insufficient,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.proposal != null">
+        proposal = #{record.proposal,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update quota_result
+    set id = #{record.id,jdbcType=VARCHAR},
+      quota_id = #{record.quotaId,jdbcType=VARCHAR},
+      project_org_id = #{record.projectOrgId,jdbcType=VARCHAR},
+      results = #{record.results,jdbcType=VARCHAR},
+      score = #{record.score,jdbcType=REAL},
+      expert_id = #{record.expertId,jdbcType=VARCHAR},
+      advantage = #{record.advantage,jdbcType=LONGVARCHAR},
+      insufficient = #{record.insufficient,jdbcType=LONGVARCHAR},
+      proposal = #{record.proposal,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update quota_result
+    set id = #{record.id,jdbcType=VARCHAR},
+      quota_id = #{record.quotaId,jdbcType=VARCHAR},
+      project_org_id = #{record.projectOrgId,jdbcType=VARCHAR},
+      results = #{record.results,jdbcType=VARCHAR},
+      score = #{record.score,jdbcType=REAL},
+      expert_id = #{record.expertId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.domain.QuotaResultWithBLOBs">
+    update quota_result
+    <set>
+      <if test="quotaId != null">
+        quota_id = #{quotaId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectOrgId != null">
+        project_org_id = #{projectOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="results != null">
+        results = #{results,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=REAL},
+      </if>
+      <if test="expertId != null">
+        expert_id = #{expertId,jdbcType=VARCHAR},
+      </if>
+      <if test="advantage != null">
+        advantage = #{advantage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="insufficient != null">
+        insufficient = #{insufficient,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="proposal != null">
+        proposal = #{proposal,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.demo.domain.QuotaResultWithBLOBs">
+    update quota_result
+    set quota_id = #{quotaId,jdbcType=VARCHAR},
+      project_org_id = #{projectOrgId,jdbcType=VARCHAR},
+      results = #{results,jdbcType=VARCHAR},
+      score = #{score,jdbcType=REAL},
+      expert_id = #{expertId,jdbcType=VARCHAR},
+      advantage = #{advantage,jdbcType=LONGVARCHAR},
+      insufficient = #{insufficient,jdbcType=LONGVARCHAR},
+      proposal = #{proposal,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.domain.QuotaResult">
+    update quota_result
+    set quota_id = #{quotaId,jdbcType=VARCHAR},
+      project_org_id = #{projectOrgId,jdbcType=VARCHAR},
+      results = #{results,jdbcType=VARCHAR},
+      score = #{score,jdbcType=REAL},
+      expert_id = #{expertId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.example.demo.domain.QuotaResult">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="quota_id" jdbcType="VARCHAR" property="quotaId" />
+    <result column="project_org_id" jdbcType="VARCHAR" property="projectOrgId" />
+    <result column="results" jdbcType="VARCHAR" property="results" />
+    <result column="score" jdbcType="REAL" property="score" />
+    <result column="expert_id" jdbcType="VARCHAR" property="expertId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.demo.domain.QuotaResultWithBLOBs">
+    <result column="advantage" jdbcType="LONGVARCHAR" property="advantage" />
+    <result column="insufficient" jdbcType="LONGVARCHAR" property="insufficient" />
+    <result column="proposal" jdbcType="LONGVARCHAR" property="proposal" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, quota_id, project_org_id, results, score, expert_id
+  </sql>
+  <sql id="Blob_Column_List">
+    advantage, insufficient, proposal
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.example.demo.domain.QuotaResultExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from quota_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.example.demo.domain.QuotaResultExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from quota_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from quota_result
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from quota_result
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.demo.domain.QuotaResultExample">
+    delete from quota_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.example.demo.domain.QuotaResultWithBLOBs" useGeneratedKeys="true">
+    insert into quota_result (quota_id, project_org_id, results, 
+      score, expert_id, advantage, 
+      insufficient, proposal)
+    values (#{quotaId,jdbcType=VARCHAR}, #{projectOrgId,jdbcType=VARCHAR}, #{results,jdbcType=VARCHAR}, 
+      #{score,jdbcType=REAL}, #{expertId,jdbcType=VARCHAR}, #{advantage,jdbcType=LONGVARCHAR}, 
+      #{insufficient,jdbcType=LONGVARCHAR}, #{proposal,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" keyProperty="id" parameterType="com.example.demo.domain.QuotaResultWithBLOBs" useGeneratedKeys="true">
+    insert into quota_result
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="quotaId != null">
+        quota_id,
+      </if>
+      <if test="projectOrgId != null">
+        project_org_id,
+      </if>
+      <if test="results != null">
+        results,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="expertId != null">
+        expert_id,
+      </if>
+      <if test="advantage != null">
+        advantage,
+      </if>
+      <if test="insufficient != null">
+        insufficient,
+      </if>
+      <if test="proposal != null">
+        proposal,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="quotaId != null">
+        #{quotaId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectOrgId != null">
+        #{projectOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="results != null">
+        #{results,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=REAL},
+      </if>
+      <if test="expertId != null">
+        #{expertId,jdbcType=VARCHAR},
+      </if>
+      <if test="advantage != null">
+        #{advantage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="insufficient != null">
+        #{insufficient,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="proposal != null">
+        #{proposal,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.demo.domain.QuotaResultExample" resultType="java.lang.Integer">
+    select count(*) from quota_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update quota_result
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quotaId != null">
+        quota_id = #{record.quotaId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectOrgId != null">
+        project_org_id = #{record.projectOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.results != null">
+        results = #{record.results,jdbcType=VARCHAR},
+      </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=REAL},
+      </if>
+      <if test="record.expertId != null">
+        expert_id = #{record.expertId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advantage != null">
+        advantage = #{record.advantage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.insufficient != null">
+        insufficient = #{record.insufficient,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.proposal != null">
+        proposal = #{record.proposal,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update quota_result
+    set id = #{record.id,jdbcType=VARCHAR},
+      quota_id = #{record.quotaId,jdbcType=VARCHAR},
+      project_org_id = #{record.projectOrgId,jdbcType=VARCHAR},
+      results = #{record.results,jdbcType=VARCHAR},
+      score = #{record.score,jdbcType=REAL},
+      expert_id = #{record.expertId,jdbcType=VARCHAR},
+      advantage = #{record.advantage,jdbcType=LONGVARCHAR},
+      insufficient = #{record.insufficient,jdbcType=LONGVARCHAR},
+      proposal = #{record.proposal,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update quota_result
+    set id = #{record.id,jdbcType=VARCHAR},
+      quota_id = #{record.quotaId,jdbcType=VARCHAR},
+      project_org_id = #{record.projectOrgId,jdbcType=VARCHAR},
+      results = #{record.results,jdbcType=VARCHAR},
+      score = #{record.score,jdbcType=REAL},
+      expert_id = #{record.expertId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.domain.QuotaResultWithBLOBs">
+    update quota_result
+    <set>
+      <if test="quotaId != null">
+        quota_id = #{quotaId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectOrgId != null">
+        project_org_id = #{projectOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="results != null">
+        results = #{results,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=REAL},
+      </if>
+      <if test="expertId != null">
+        expert_id = #{expertId,jdbcType=VARCHAR},
+      </if>
+      <if test="advantage != null">
+        advantage = #{advantage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="insufficient != null">
+        insufficient = #{insufficient,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="proposal != null">
+        proposal = #{proposal,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.demo.domain.QuotaResultWithBLOBs">
+    update quota_result
+    set quota_id = #{quotaId,jdbcType=VARCHAR},
+      project_org_id = #{projectOrgId,jdbcType=VARCHAR},
+      results = #{results,jdbcType=VARCHAR},
+      score = #{score,jdbcType=REAL},
+      expert_id = #{expertId,jdbcType=VARCHAR},
+      advantage = #{advantage,jdbcType=LONGVARCHAR},
+      insufficient = #{insufficient,jdbcType=LONGVARCHAR},
+      proposal = #{proposal,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.domain.QuotaResult">
+    update quota_result
+    set quota_id = #{quotaId,jdbcType=VARCHAR},
+      project_org_id = #{projectOrgId,jdbcType=VARCHAR},
+      results = #{results,jdbcType=VARCHAR},
+      score = #{score,jdbcType=REAL},
+      expert_id = #{expertId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.example.demo.domain.QuotaResult">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="quota_id" jdbcType="VARCHAR" property="quotaId" />
+    <result column="project_org_id" jdbcType="VARCHAR" property="projectOrgId" />
+    <result column="results" jdbcType="VARCHAR" property="results" />
+    <result column="score" jdbcType="REAL" property="score" />
+    <result column="expert_id" jdbcType="VARCHAR" property="expertId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.demo.domain.QuotaResultWithBLOBs">
+    <result column="advantage" jdbcType="LONGVARCHAR" property="advantage" />
+    <result column="insufficient" jdbcType="LONGVARCHAR" property="insufficient" />
+    <result column="proposal" jdbcType="LONGVARCHAR" property="proposal" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, quota_id, project_org_id, results, score, expert_id
+  </sql>
+  <sql id="Blob_Column_List">
+    advantage, insufficient, proposal
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.example.demo.domain.QuotaResultExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from quota_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.example.demo.domain.QuotaResultExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from quota_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from quota_result
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from quota_result
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.demo.domain.QuotaResultExample">
+    delete from quota_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.example.demo.domain.QuotaResultWithBLOBs" useGeneratedKeys="true">
+    insert into quota_result (quota_id, project_org_id, results, 
+      score, expert_id, advantage, 
+      insufficient, proposal)
+    values (#{quotaId,jdbcType=VARCHAR}, #{projectOrgId,jdbcType=VARCHAR}, #{results,jdbcType=VARCHAR}, 
+      #{score,jdbcType=REAL}, #{expertId,jdbcType=VARCHAR}, #{advantage,jdbcType=LONGVARCHAR}, 
+      #{insufficient,jdbcType=LONGVARCHAR}, #{proposal,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" keyProperty="id" parameterType="com.example.demo.domain.QuotaResultWithBLOBs" useGeneratedKeys="true">
+    insert into quota_result
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="quotaId != null">
+        quota_id,
+      </if>
+      <if test="projectOrgId != null">
+        project_org_id,
+      </if>
+      <if test="results != null">
+        results,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="expertId != null">
+        expert_id,
+      </if>
+      <if test="advantage != null">
+        advantage,
+      </if>
+      <if test="insufficient != null">
+        insufficient,
+      </if>
+      <if test="proposal != null">
+        proposal,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="quotaId != null">
+        #{quotaId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectOrgId != null">
+        #{projectOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="results != null">
+        #{results,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=REAL},
+      </if>
+      <if test="expertId != null">
+        #{expertId,jdbcType=VARCHAR},
+      </if>
+      <if test="advantage != null">
+        #{advantage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="insufficient != null">
+        #{insufficient,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="proposal != null">
+        #{proposal,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.demo.domain.QuotaResultExample" resultType="java.lang.Integer">
+    select count(*) from quota_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update quota_result
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quotaId != null">
+        quota_id = #{record.quotaId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectOrgId != null">
+        project_org_id = #{record.projectOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.results != null">
+        results = #{record.results,jdbcType=VARCHAR},
+      </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=REAL},
+      </if>
+      <if test="record.expertId != null">
+        expert_id = #{record.expertId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advantage != null">
+        advantage = #{record.advantage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.insufficient != null">
+        insufficient = #{record.insufficient,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.proposal != null">
+        proposal = #{record.proposal,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update quota_result
+    set id = #{record.id,jdbcType=VARCHAR},
+      quota_id = #{record.quotaId,jdbcType=VARCHAR},
+      project_org_id = #{record.projectOrgId,jdbcType=VARCHAR},
+      results = #{record.results,jdbcType=VARCHAR},
+      score = #{record.score,jdbcType=REAL},
+      expert_id = #{record.expertId,jdbcType=VARCHAR},
+      advantage = #{record.advantage,jdbcType=LONGVARCHAR},
+      insufficient = #{record.insufficient,jdbcType=LONGVARCHAR},
+      proposal = #{record.proposal,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update quota_result
+    set id = #{record.id,jdbcType=VARCHAR},
+      quota_id = #{record.quotaId,jdbcType=VARCHAR},
+      project_org_id = #{record.projectOrgId,jdbcType=VARCHAR},
+      results = #{record.results,jdbcType=VARCHAR},
+      score = #{record.score,jdbcType=REAL},
+      expert_id = #{record.expertId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.domain.QuotaResultWithBLOBs">
+    update quota_result
+    <set>
+      <if test="quotaId != null">
+        quota_id = #{quotaId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectOrgId != null">
+        project_org_id = #{projectOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="results != null">
+        results = #{results,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=REAL},
+      </if>
+      <if test="expertId != null">
+        expert_id = #{expertId,jdbcType=VARCHAR},
+      </if>
+      <if test="advantage != null">
+        advantage = #{advantage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="insufficient != null">
+        insufficient = #{insufficient,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="proposal != null">
+        proposal = #{proposal,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.demo.domain.QuotaResultWithBLOBs">
+    update quota_result
+    set quota_id = #{quotaId,jdbcType=VARCHAR},
+      project_org_id = #{projectOrgId,jdbcType=VARCHAR},
+      results = #{results,jdbcType=VARCHAR},
+      score = #{score,jdbcType=REAL},
+      expert_id = #{expertId,jdbcType=VARCHAR},
+      advantage = #{advantage,jdbcType=LONGVARCHAR},
+      insufficient = #{insufficient,jdbcType=LONGVARCHAR},
+      proposal = #{proposal,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.domain.QuotaResult">
+    update quota_result
+    set quota_id = #{quotaId,jdbcType=VARCHAR},
+      project_org_id = #{projectOrgId,jdbcType=VARCHAR},
+      results = #{results,jdbcType=VARCHAR},
+      score = #{score,jdbcType=REAL},
+      expert_id = #{expertId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
