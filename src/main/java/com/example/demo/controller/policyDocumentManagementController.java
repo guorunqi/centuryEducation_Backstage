@@ -189,7 +189,8 @@ public class policyDocumentManagementController {
     public ControllerReturn selectEditSubordinatePolicyDocumentEntry(String id) {
         ControllerReturn controllerReturn = new ControllerReturn();
         try {
-            controllerReturn.setData(policyDocumentEntryService.selectPolicyDocumentEntryByPrimaryKey(id));
+            PolicyDocumentEntry policyDocumentEntry = policyDocumentEntryService.selectPolicyDocumentEntryByPrimaryKey(id);
+            controllerReturn.setData(policyDocumentEntry);
             controllerReturn.setCode("true");
             return controllerReturn;
         }catch (Exception e){
