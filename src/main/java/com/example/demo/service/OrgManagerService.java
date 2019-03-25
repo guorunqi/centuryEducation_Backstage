@@ -41,6 +41,11 @@ public class OrgManagerService {
         }
         return true;
     }
+    public List<Organization> queryOrganizationByCode(String code){
+        OrganizationExample organizationExample=new OrganizationExample();
+        organizationExample.or().andCodeEqualTo(code);
+        return organizationMapper.selectByExample(organizationExample);
+    }
     public Organization queryOrgById(String id){
         return organizationMapper.selectByPrimaryKey(id);
     }
