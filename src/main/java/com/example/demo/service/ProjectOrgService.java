@@ -46,6 +46,15 @@ public class ProjectOrgService {
         projectOrgExample.or().andProIdEqualTo(ProjectId);
         return projectOrgMapper.deleteByExample(projectOrgExample);
     }
+    /**
+     * 根据ID 删除数据
+     * @return
+     */
+    public int deleteOrgById(String id){
+        ProjectOrgExample projectOrgExample = new ProjectOrgExample();
+        projectOrgExample.or().andIdEqualTo(id);
+        return projectOrgMapper.deleteByExample(projectOrgExample);
+    }
     public List<HashMap> queryProjectOrgByProjectID(String projectID){
         if(!StringUtils.isBlank(projectID)){
             return projectOrgMapper.queryProjectOrgByProjectID(projectID);

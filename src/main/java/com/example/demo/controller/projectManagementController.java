@@ -5,8 +5,8 @@ import com.example.demo.domain.*;
 import com.example.demo.service.*;
 import com.example.demo.util.CommonUtil;
 import com.example.demo.util.DateUtil;
+import net.minidev.json.JSONArray;
 import org.apache.commons.lang3.StringUtils;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,10 +46,10 @@ public class projectManagementController {
                     String proId = project.getId();
                     Map map = CommonUtil.objectToMap(project);;
                     List Orgs  = new ArrayList();
-                    List<ProjectOrgUser> ProjectOrgUserList = projectOrgUserService.selectOrgUserByProjectId(proId);
-                    if(ProjectOrgUserList.size()>0){
-                        for (ProjectOrgUser ProjectOrgUser:ProjectOrgUserList){
-                            String orhId = ProjectOrgUser.getOrgId();
+                    List<ProjectOrg> ProjectOrgList = projectOrgService.selectOrgByProjectId(proId);
+                    if(ProjectOrgList != null ){
+                        for (ProjectOrg ProjectOrg:ProjectOrgList){
+                            String orhId = ProjectOrg.getOrgId();
                             Organization Org = orgServer.selectOrgByOrgId(orhId);
                             if (!Orgs.contains(Org.getName())){
                                 Orgs.add(Org.getName());
@@ -83,6 +83,55 @@ public class projectManagementController {
      * @param linkedMap
      * @return
      */
+    @ResponseBody
+    @RequestMapping(value = "/SaveProjectData",method = {RequestMethod.POST})
+    public ControllerReturn SaveProjectData(@RequestBody Map linkedMap) {
+        ControllerReturn controllerReturn = new ControllerReturn();
+        try {
+            DateUtil dataUtil = new DateUtil();
+            String jsonStr= JSON.toJSONString(linkedMap);
+            JSONObject JsonObjData = new JSONObject(jsonStr);
+            JSONObject projectObj = (JSONObject)JsonObjData.get("project");
+            String orgs = (String)JsonObjData.get("orgs");
+
+            //保存项目表
+            String ProjectPrimaryKey = CommonUtil.getPrimaryKey();
+            Project project = new Project();
+            project.setId(ProjectPrimaryKey);
+            project.setStutas("0");
+            project.setClassOne(projectObj.getString("classOne"));
+            project.setClassTwo(projectObj.getString("classTwo"));
+            project.setName(projectObj.getString("name"));
+            project.setEndTime(dataUtil.getDateFormat(projectObj.getString("endTime")));
+            project.setStartTime(dataUtil.getDateFormat(projectObj.getString("startTime")));
+            int rtnProject = loginService.insertProject(project);
+
+            //String orgs = projectObj.getString("orgs");
+            //选择的机构
+            String[] orgArr = orgs.split(",");
+            if(orgArr.length>0){
+                for (int i = 0; i < orgArr.length; i++) {
+                    //获取机构信息
+                    Organization organization = orgServer.selectOrgBycode(orgArr[i]);
+                    //插入项目机构表数据
+                    ProjectOrg projectOrg = new ProjectOrg();
+                    projectOrg.setId(CommonUtil.getPrimaryKey());
+                    projectOrg.setProId(project.getId());
+                    projectOrg.setOrgId(organization.getId());
+                    projectOrgService.insertProjectOrg(projectOrg);
+                }
+            }
+            controllerReturn.setData(project.getId());
+            controllerReturn.setCode("true");
+            return controllerReturn;
+        }catch (Exception e){
+            controllerReturn.setCode("false");
+            controllerReturn.setMessage(e.toString());
+            return controllerReturn;
+        }
+    }
+
+/*
     @ResponseBody
     @RequestMapping(value = "/SaveProjectData",method = {RequestMethod.POST})
     public ControllerReturn SaveProjectData(@RequestBody Map linkedMap) {
@@ -145,6 +194,7 @@ public class projectManagementController {
             return controllerReturn;
         }
     }
+*/
 
     /**
      * 根据项目ID删除项目
@@ -195,13 +245,20 @@ public class projectManagementController {
             List<PolicyDocument> PolicyDocumentList = new ArrayList<PolicyDocument>();
             List<Map> SpecialistList = new ArrayList<Map>();
             Map<String,Object> mapData = new HashMap();
-
+            List<String> orgList = new ArrayList<String>();
             mapData.put( "project" , project );
+            List<ProjectOrg> projectOrg = projectOrgService.selectOrgByProjectId(projectId);
+            if(projectOrg.size()>0){
+                for(int i=0 ; i<projectOrg.size() ; i++){
+                    Map map = new HashMap();
+                    Organization Org = orgServer.selectOrgByOrgId(projectOrg.get(i).getOrgId());
+                    orgList.add(Org.getCode());
+                }
+                mapData.put( "orgs" , orgList );
+            }
             //查询org并转成数组
             List<ProjectOrgUser> projectOrgUser = projectOrgUserService.selectOrgUserByProjectId(projectId);
-            // List<ProjectOrg> ProjectOrgs = projectOrgService.selectOrgByProjectId(projectId);
             Orgs =new String[projectOrgUser.size()];
-            mapData.put( "Orgs" , Orgs );
             if(projectOrgUser.size()>0){
                 for(int i=0 ; i<projectOrgUser.size() ; i++){
                     Map map = new HashMap();
@@ -218,6 +275,7 @@ public class projectManagementController {
                     map.put("userRemarks",user.getRemarks());
                     SpecialistList.add(map);
                 }
+                mapData.put( "Orgs" , Orgs );
                 mapData.put( "SpecialistList" , SpecialistList );
             }
             //根据项目ID 查询相关文件
@@ -365,7 +423,7 @@ public class projectManagementController {
             String jsonStr= JSON.toJSONString(linkedMap);
             JSONObject JsonObjData = new JSONObject(jsonStr);
             JSONObject projectObj = (JSONObject)JsonObjData.get("project");
-
+            String orgs = JsonObjData.getString("orgs");
             //保存项目表
             Project project = projectManagementService.selectProjectByPrimaryKey(projectObj.getString("id"));
             project.setClassOne(projectObj.getString("classOne"));
@@ -374,6 +432,28 @@ public class projectManagementController {
             project.setEndTime(dataUtil.getDateFormat(projectObj.getString("endTime")));
             project.setStartTime(dataUtil.getDateFormat(projectObj.getString("startTime")));
             loginService.upDataProject(project);
+
+            List<ProjectOrg> projectOrg = projectOrgService.selectOrgByProjectId(project.getId());
+            if(projectOrg.size()>0){
+                for(ProjectOrg Org:projectOrg){
+                    projectOrgService.deleteOrgById(Org.getId());
+                }
+            }
+
+            //选择的机构
+            String[] orgArr = orgs.split(",");
+            if(orgArr.length>0){
+                for (int i = 0; i < orgArr.length; i++) {
+                    //获取机构信息
+                    Organization organization = orgServer.selectOrgBycode(orgArr[i]);
+                    //插入项目机构表数据
+                    ProjectOrg pOrg = new ProjectOrg();
+                    pOrg.setId(CommonUtil.getPrimaryKey());
+                    pOrg.setProId(project.getId());
+                    pOrg.setOrgId(organization.getId());
+                    projectOrgService.insertProjectOrg(pOrg);
+                }
+            }
 
             controllerReturn.setCode("true");
             return controllerReturn;
