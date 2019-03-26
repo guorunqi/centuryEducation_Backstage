@@ -161,9 +161,12 @@ public class QuestionnaireManagementController {
                 questionnaireMap  = CommonUtil.objectToMap(questionnaire);
                 List<Map> OrgData = new ArrayList();
                 List<ProjectOrg> ProjectOrgData = projectOrgService.selectOrgByProjectId(questionnaire.getProjectId());
+
+                questionnaireMap.put("ProjectOrgData",ProjectOrgData);
                 for (ProjectOrg projectOrg : ProjectOrgData){
-                    Map orgMap = CommonUtil.objectToMap(orgService.selectOrgByOrgId(projectOrg.getId()));
-                    orgMap.put("projectOrgId",projectOrg.getId());
+                    Organization org =orgService.selectOrgByOrgId(projectOrg.getOrgId());
+                    Map orgMap = CommonUtil.objectToMap(org);
+                     orgMap.put("projectOrgId",projectOrg.getId());
                     OrgData.add(orgMap);
                 }
                 questionnaireMap.put("OrgData",OrgData);
@@ -175,6 +178,19 @@ public class QuestionnaireManagementController {
                         AnswerExample answerExample = new AnswerExample();
                         answerExample.or().andProblemIdEqualTo(problem.getId());
                         List<Answer> AnswerList = answerService.selectByExample(answerExample);
+                        List<AnswerResult> AnswerResultData = new ArrayList<>();
+                        if(AnswerList.size()>0){
+                            for (Answer answer:AnswerList){
+                                AnswerResultExample answerResultExample = new AnswerResultExample();
+                                answerResultExample.or().andAnswerIdEqualTo(answer.getId());
+                                List<AnswerResult> AnswerResultList = answerResultService.selectByExample(answerResultExample);
+                                if (AnswerResultList.size()>0){
+                                    for (AnswerResult AnswerResult:AnswerResultList)
+                                    AnswerResultData.add(AnswerResult);
+                                }
+                            }
+                            problemMap.put("AnswerResultData",AnswerResultData);
+                        }
                         problemMap.put("answerData",AnswerList);
                         questionnaireMap.put("QuestionnaireData",problemMap);
                     }
