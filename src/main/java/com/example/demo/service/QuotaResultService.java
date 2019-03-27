@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dao.QuotaMapper;
 import com.example.demo.dao.QuotaResultMapper;
 import com.example.demo.domain.QuotaResult;
+import com.example.demo.domain.QuotaResultExample;
 import com.example.demo.domain.QuotaResultWithBLOBs;
 import com.example.demo.util.CommonUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -28,6 +29,20 @@ public class QuotaResultService {
                     quotaResultMapper.updateByPrimaryKey(quotaResultWithBLOBs);
                 }
             }
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+    public Boolean deleteQuotaResultByQuotaId(String quotaId){
+        try {
+                if(!StringUtils.isBlank(quotaId)){
+                    QuotaResultExample quotaResultExample=new QuotaResultExample();
+                    quotaResultExample.or().andQuotaIdEqualTo(quotaId);
+                    quotaResultMapper.deleteByExample(quotaResultExample);
+                }else{
+                    return true;
+                }
             return true;
         }catch (Exception e){
             return false;

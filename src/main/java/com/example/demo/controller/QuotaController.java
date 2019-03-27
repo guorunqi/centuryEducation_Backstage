@@ -61,6 +61,29 @@ public class QuotaController {
         try{
             String jsonString=JSONObject.parseObject(data).get("data").toString();
             Quota quota=JSONObject.parseObject(jsonString,Quota.class);
+            Float number=new Float(0);
+            List<Quota> list=null;
+            if(StringUtils.isBlank(quota.getpId())){
+                list=quotaService.queryTopQuotaByAssessmentId(quota.getAssessmentId());
+            }else{
+                list=quotaService.queryNoTopQuotaByAssessmentId(quota.getAssessmentId(),quota.getpId());
+            }
+            if(list!=null) {
+                for (Quota q : list) {
+                    if (q.getWeight() == null || q.getWeight().equals("")) {
+                        number += 0;
+                    } else {
+                        number += q.getWeight();
+                    }
+                }
+                number+=quota.getWeight();
+                if(number>1.0){
+                    controllerReturn.setCode("false");
+                    controllerReturn.setMessage("权重相加总和大于1");
+                    return controllerReturn;
+                }
+            }
+
             Quota quota1=quotaService.saveQuota(quota);
             if(quota1!=null){
                 controllerReturn.setCode("true");

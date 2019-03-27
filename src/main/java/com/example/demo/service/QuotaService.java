@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.QuotaMapper;
+import com.example.demo.dao.QuotaResultMapper;
 import com.example.demo.domain.Quota;
 import com.example.demo.domain.QuotaExample;
 import com.example.demo.util.CommonUtil;
@@ -18,6 +19,8 @@ import java.util.List;
 public class QuotaService {
     @Resource
     private QuotaMapper quotaMapper;
+    @Resource
+    private QuotaResultService quotaResultService;
     public List<Quota> queryQuotaByAssessmentId(String assessmentId){
         QuotaExample quotaExample=new QuotaExample();
         quotaExample.or().andAssessmentIdEqualTo(assessmentId);
@@ -30,9 +33,12 @@ public class QuotaService {
         try {
             if(treeTablePojo.children.size()>0){
                 for(TreeTablePojo quota:treeTablePojo.children){
+                    quotaResultService.deleteQuotaResultByQuotaId(quota.getId());
                     deleteQuota(quota);
+
                 }
             }
+            quotaResultService.deleteQuotaResultByQuotaId(treeTablePojo.getId());
             quotaMapper.deleteByPrimaryKey(treeTablePojo.getId());
             return true;
         }catch (Exception e){
@@ -55,5 +61,34 @@ public class QuotaService {
             return null;
         }
 
+    }
+
+    public List<Quota> queryTopQuotaByAssessmentId(String assessmentId){
+        try {
+            if(!StringUtils.isBlank(assessmentId)){
+                QuotaExample quotaExample=new QuotaExample();
+                quotaExample.or().andPIdIsNull().andAssessmentIdEqualTo(assessmentId);
+                return quotaMapper.selectByExample(quotaExample);
+            }else {
+                return null;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public List<Quota> queryNoTopQuotaByAssessmentId(String assessmentId,String pid){
+        try {
+            if(!StringUtils.isBlank(assessmentId)&&!StringUtils.isBlank(pid)){
+                QuotaExample quotaExample=new QuotaExample();
+                quotaExample.or().andPIdEqualTo(pid).andAssessmentIdEqualTo(assessmentId);
+                return quotaMapper.selectByExample(quotaExample);
+            }else {
+                return null;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 }

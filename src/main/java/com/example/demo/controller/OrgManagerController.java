@@ -10,6 +10,7 @@ import com.example.demo.domain.OrgType;
 import com.example.demo.domain.Organization;
 import com.example.demo.service.OrgManagerService;
 import com.example.demo.util.TreePojo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -47,11 +48,13 @@ public class OrgManagerController {
         try{
             String jsonString=JSONObject.parseObject(data).get("data").toString();
             Organization org=JSONObject.parseObject(jsonString,Organization.class);
-            List<Organization> list=orgManagerService.queryOrganizationByCode(org.getCode());
-            if(list.size()>0){
-                controllerReturn.setCode("false");
-                controllerReturn.setData("code重复");
-                return controllerReturn;
+            if(StringUtils.isBlank(org.getId())){
+                List<Organization> list=orgManagerService.queryOrganizationByCode(org.getCode());
+                if(list.size()>0){
+                    controllerReturn.setCode("false");
+                    controllerReturn.setData("code重复");
+                    return controllerReturn;
+                }
             }
             Boolean sign=orgManagerService.saveOrganization(org);
             controllerReturn.setCode("true");
