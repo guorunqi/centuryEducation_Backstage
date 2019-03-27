@@ -17,6 +17,12 @@ public class AnswerResultService {
     public int insert (AnswerResult answerResult){
         return answerResultMapper.insert(answerResult);
     }
+    public int updateByPrimaryKey (AnswerResult answerResult){
+        return answerResultMapper.updateByPrimaryKey(answerResult);
+    }
+    public int deleteByPrimaryKey (String id){
+        return answerResultMapper.deleteByPrimaryKey(id);
+    }
     public List<AnswerResult> selectByExample (AnswerResultExample answerResultExample){
         return answerResultMapper.selectByExample(answerResultExample);
     }

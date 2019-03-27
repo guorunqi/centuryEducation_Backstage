@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dao.AnswerMapper;
 import com.example.demo.domain.Answer;
 import com.example.demo.domain.AnswerExample;
+import com.example.demo.domain.AnswerRate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,6 +20,10 @@ private AnswerMapper answerMapper;
 
     public List<Answer> selectByExample(AnswerExample answerExample){
         return answerMapper.selectByExample(answerExample);
+    }
+    public List<AnswerRate> selectSelectionRate(String problemId, String projectOrgId ){
+        List<AnswerRate> s = answerMapper.selectSelectionRate(problemId,projectOrgId);
+        return s;
     }
 
     public int updateByPrimaryKey(Answer answer){

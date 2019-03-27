@@ -68,6 +68,213 @@ public class QuestionnaireManagementController {
         ControllerReturn controllerReturn = new ControllerReturn();
         String jsonString= JSONObject.parseObject(data).get("data").toString();
         Map map = (Map) JSON.parse(jsonString);
+        try {
+            Questionnaire questionnaire=JSONObject.parseObject(jsonString,Questionnaire.class);
+            if("".equals(questionnaire.getId().toString())){
+                questionnaire.setProjectId((String) map.get("projectId"));
+                questionnaire.setId(CommonUtil.getPrimaryKey());
+                int rtnQuestionnaire = questionnaireManagementService.saveQuestionnaire(questionnaire);
+            }else{
+                int rtnQuestionnaire = questionnaireManagementService.updateByPrimaryKey(questionnaire);
+            }
+
+            controllerReturn.setData(questionnaire.getId());
+            controllerReturn.setCode("true");
+            controllerReturn.setMessage("保存成功");
+        }catch (Exception e){
+            controllerReturn.setCode("false");
+            controllerReturn.setMessage(e.getMessage().toString());
+        }
+        return controllerReturn;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/QuestionnaireLoad",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
+    public ControllerReturn QuestionnaireLoad(@RequestBody String data){
+        ControllerReturn controllerReturn = new ControllerReturn();
+        String jsonString= JSONObject.parseObject(data).get("data").toString();
+        Map map = (Map) JSON.parse(jsonString);
+        Questionnaire questionnaire=JSONObject.parseObject(jsonString,Questionnaire.class);
+        try {
+            List<Problem> ProblemList = problemService.selectByExample(questionnaire.getId());
+            controllerReturn.setData(ProblemList);
+            controllerReturn.setCode("true");
+            controllerReturn.setMessage("保存成功");
+        }catch (Exception e){
+            controllerReturn.setCode("false");
+            controllerReturn.setMessage(e.getMessage().toString());
+        }
+        return controllerReturn;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/SaveQuestion",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
+    public ControllerReturn SaveQuestion(@RequestBody String data){
+        ControllerReturn controllerReturn = new ControllerReturn();
+        String jsonString= JSONObject.parseObject(data).get("data").toString();
+        Map map = (Map) JSON.parse(jsonString);
+        try {
+            Problem problem=JSONObject.parseObject(jsonString,Problem.class);
+            if("".equals(problem.getId().toString())){
+                problem.setId(CommonUtil.getPrimaryKey());
+                int rtnQuestionnaire = problemService.insertProblem(problem);
+            }else{
+                int rtnQuestionnaire = problemService.updateByPrimaryKey(problem);
+            }
+            controllerReturn.setData(problem.getId());
+            controllerReturn.setCode("true");
+            controllerReturn.setMessage("保存成功");
+        }catch (Exception e){
+            controllerReturn.setCode("false");
+            controllerReturn.setMessage(e.getMessage().toString());
+        }
+        return controllerReturn;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/LoadAnswer",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
+    public ControllerReturn LoadAnswer(@RequestBody String data){
+        ControllerReturn controllerReturn = new ControllerReturn();
+        String jsonString= JSONObject.parseObject(data).get("data").toString();
+        Map map = (Map) JSON.parse(jsonString);
+        String problemStr = map.get("problem").toString();
+        String projectOrgId = map.get("projectOrgId").toString();
+        Problem problem=JSONObject.parseObject(problemStr,Problem.class);
+        try {
+            List<AnswerRate> AnswerRateList = answerService.selectSelectionRate(problem.getId(),projectOrgId);
+            if(AnswerRateList.size()>0){
+                controllerReturn.setData(AnswerRateList);
+            }else{
+                AnswerExample answerExample = new AnswerExample();
+                answerExample.or().andProblemIdEqualTo(problem.getId());
+                List<Answer> AnswerLisst = answerService.selectByExample(answerExample);
+                controllerReturn.setData(AnswerLisst);
+            }
+            controllerReturn.setCode("true");
+            controllerReturn.setMessage("保存成功");
+        }catch (Exception e){
+            controllerReturn.setCode("false");
+            controllerReturn.setMessage(e.getMessage().toString());
+        }
+        return controllerReturn;
+    }
+/*
+    @ResponseBody
+    @RequestMapping(value = "/LoadAnswer",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
+    public ControllerReturn LoadAnswer(@RequestBody String data){
+        ControllerReturn controllerReturn = new ControllerReturn();
+        String jsonString= JSONObject.parseObject(data).get("data").toString();
+        Map map = (Map) JSON.parse(jsonString);
+        try {
+            Problem problem=JSONObject.parseObject(jsonString,Problem.class);
+            AnswerExample answerExample = new AnswerExample();
+                          answerExample.or().andProblemIdEqualTo(problem.getId());
+            List<Answer> AnswerLisst = answerService.selectByExample(answerExample);
+            if(AnswerLisst.size()>0){
+                for( Answer Answer:AnswerLisst){
+                    answerService.selectSelectionRate(Answer.getId(),);
+                }
+            }
+            controllerReturn.setData(AnswerLisst);
+            controllerReturn.setCode("true");
+            controllerReturn.setMessage("保存成功");
+        }catch (Exception e){
+            controllerReturn.setCode("false");
+            controllerReturn.setMessage(e.getMessage().toString());
+        }
+        return controllerReturn;
+    }
+*/
+
+    @ResponseBody
+    @RequestMapping(value = "/SaveAnswerResult",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
+    public ControllerReturn SaveAnswerResult(@RequestBody String data){
+        ControllerReturn controllerReturn = new ControllerReturn();
+        String jsonString= JSONObject.parseObject(data).get("data").toString();
+        Map map = (Map) JSON.parse(jsonString);
+        try {
+            AnswerResult answerResult=JSONObject.parseObject(jsonString,AnswerResult.class);
+            if("".equals(answerResult.getId())){
+                answerResult.setId(CommonUtil.getPrimaryKey());
+                int i = answerResultService.insert(answerResult);
+            }else{
+                answerResultService.updateByPrimaryKey(answerResult);
+            }
+            controllerReturn.setData(answerResult.getId());
+            controllerReturn.setCode("true");
+            controllerReturn.setMessage("保存成功");
+        }catch (Exception e){
+            controllerReturn.setCode("false");
+            controllerReturn.setMessage(e.getMessage().toString());
+        }
+        return controllerReturn;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/DeleteQuestionAndAnswer",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
+    public ControllerReturn DeleteQuestionAndAnswer(@RequestBody String data){
+        ControllerReturn controllerReturn = new ControllerReturn();
+        String jsonString= JSONObject.parseObject(data).get("data").toString();
+        Map map = (Map) JSON.parse(jsonString);
+        try {
+            Problem problem=JSONObject.parseObject(jsonString,Problem.class);
+            AnswerExample answerExample = new AnswerExample();
+                          answerExample.or().andProblemIdEqualTo(problem.getId());
+            List<Answer> AnswerList = answerService.selectByExample(answerExample);
+            for(Answer Answer:AnswerList){
+                int i = answerService.deleteByPrimaryKey(Answer.getId());
+            }
+            problemService.deleteByPrimaryKey(problem.getId());
+
+            controllerReturn.setCode("true");
+            controllerReturn.setMessage("保存成功");
+        }catch (Exception e){
+            controllerReturn.setCode("false");
+            controllerReturn.setMessage(e.getMessage().toString());
+        }
+        return controllerReturn;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/SaveAnswer",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
+    public ControllerReturn SaveAnswer(@RequestBody String data){
+        ControllerReturn controllerReturn = new ControllerReturn();
+        String jsonString= JSONObject.parseObject(data).get("data").toString();
+        Map map = (Map) JSON.parse(jsonString);
+        Answer answer=JSONObject.parseObject(jsonString,Answer.class);
+        answer.setId(CommonUtil.getPrimaryKey());
+        try {
+            int answerrtn = answerService.insertAnswer(answer);
+            controllerReturn.setData(answer);
+            controllerReturn.setCode("true");
+            controllerReturn.setMessage("保存成功");
+        }catch (Exception e){
+            controllerReturn.setCode("false");
+            controllerReturn.setMessage(e.getMessage().toString());
+        }
+        return controllerReturn;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/deleteAnswer",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
+    public ControllerReturn deleteAnswer(@RequestBody String data){
+        ControllerReturn controllerReturn = new ControllerReturn();
+        String jsonString= JSONObject.parseObject(data).get("data").toString();
+        Map map = (Map) JSON.parse(jsonString);
+        Answer answer=JSONObject.parseObject(jsonString,Answer.class);
+        try {
+            int answerrtn = answerService.deleteByPrimaryKey(answer.getId());
+            controllerReturn.setCode("true");
+            controllerReturn.setMessage("保存成功");
+        }catch (Exception e){
+            controllerReturn.setCode("false");
+            controllerReturn.setMessage(e.getMessage().toString());
+        }
+        return controllerReturn;
+    }
+    /*@ResponseBody
+    @RequestMapping(value = "/SaveQuestionnaire",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
+    public ControllerReturn SaveQuestionnaire(@RequestBody String data){
+        ControllerReturn controllerReturn = new ControllerReturn();
+        String jsonString= JSONObject.parseObject(data).get("data").toString();
+        Map map = (Map) JSON.parse(jsonString);
         Questionnaire questionnaire=JSONObject.parseObject(jsonString,Questionnaire.class);
         questionnaire.setProjectId((String) map.get("proId"));
         questionnaire.setId(CommonUtil.getPrimaryKey());
@@ -110,36 +317,17 @@ public class QuestionnaireManagementController {
             controllerReturn.setMessage(e.getMessage().toString());
         }
         return controllerReturn;
-    }
-
+    }*/
     @ResponseBody
-    @RequestMapping(value = "/EditQuestionnaireManagementLoad")
-    public ControllerReturn EditQuestionnaireManagementLoad(String QuestionnaireId){
+    @RequestMapping(value = "/EditQuestionnaireManagementLoad",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
+    public ControllerReturn EditQuestionnaireManagementLoad(@RequestBody String data){
         ControllerReturn controllerReturn = new ControllerReturn();
-        CommonUtil commonutil = new CommonUtil();
+        String jsonString= JSONObject.parseObject(data).get("data").toString();
+        Map map = (Map) JSON.parse(jsonString);
+        String QuestionnaireId = map.get("QuestionnaireId").toString();
         try{
-            Map questionnaireMap = null;
-            if(QuestionnaireId != null && QuestionnaireId != ""){
-                Questionnaire questionnaire = questionnaireManagementService.selectByPrimaryKey(QuestionnaireId);
-                questionnaireMap  = CommonUtil.objectToMap(questionnaire);
-                // QuestionnaireData
-                List<Problem> ProblemList = problemService.selectByExample(questionnaire.getId());
-                if (ProblemList.size() > 0){
-                    for (int i=0;i<ProblemList.size();i++){
-                        Problem problem = ProblemList.get(i);
-                        Map problemMap  = CommonUtil.objectToMap(problem);
-                        AnswerExample answerExample = new AnswerExample();
-                        answerExample.or().andProblemIdEqualTo(problem.getId());
-                        List<Answer> AnswerList = answerService.selectByExample(answerExample);
-                        problemMap.put("answerData",AnswerList);
-                        questionnaireMap.put("QuestionnaireData",problemMap);
-                    }
-                }else{
-                    questionnaireMap.put("QuestionnaireData",new ArrayList<>());
-                }
-            }
-
-            controllerReturn.setData(questionnaireMap);
+            Questionnaire questionnaire = questionnaireManagementService.selectByPrimaryKey(QuestionnaireId);
+            controllerReturn.setData(questionnaire);
             controllerReturn.setCode("true");
             return controllerReturn;
         }catch (Exception e){
@@ -171,11 +359,12 @@ public class QuestionnaireManagementController {
                 }
                 questionnaireMap.put("OrgData",OrgData);
                 List<Problem> ProblemList = problemService.selectByExample(questionnaire.getId());
-                if (ProblemList.size() > 0){
+                questionnaireMap.put("ProblemList",ProblemList);
+                /*if (ProblemList.size() > 0){
                     for (int i=0;i<ProblemList.size();i++){
                         Problem problem = ProblemList.get(i);
                         Map problemMap  = CommonUtil.objectToMap(problem);
-                        AnswerExample answerExample = new AnswerExample();
+                        *//*AnswerExample answerExample = new AnswerExample();
                         answerExample.or().andProblemIdEqualTo(problem.getId());
                         List<Answer> AnswerList = answerService.selectByExample(answerExample);
                         List<AnswerResult> AnswerResultData = new ArrayList<>();
@@ -190,11 +379,11 @@ public class QuestionnaireManagementController {
                                 }
                             }
                             problemMap.put("AnswerResultData",AnswerResultData);
-                        }
-                        problemMap.put("answerData",AnswerList);
+                        }*//*
+                        *//*problemMap.put("answerData",AnswerList);*//*
                         questionnaireMap.put("QuestionnaireData",problemMap);
                     }
-                }
+                }*/
             }
             controllerReturn.setData(questionnaireMap);
             controllerReturn.setCode("true");
@@ -335,7 +524,16 @@ public class QuestionnaireManagementController {
                             if(AnswerList.size() > 0 ){
                                 for (int k=0;k<AnswerList.size();k++){
                                     Answer answer = AnswerList.get(k);
-                                    answerService.deleteByPrimaryKey(answer.getId());
+                                    AnswerResultExample answerResultExample = new AnswerResultExample();
+                                                        answerResultExample.or().andAnswerIdEqualTo(answer.getId());
+
+                                    List<AnswerResult> AnswerResultList = answerResultService.selectByExample(answerResultExample);
+                                    if(AnswerResultList.size()>0){
+                                        for (AnswerResult AnswerResult:AnswerResultList){
+                                            answerResultService.deleteByPrimaryKey(AnswerResult.getId());
+                                        }
+                                    }
+                                    int l = answerService.deleteByPrimaryKey(answer.getId());
                                 }
                             }
                             problemService.deleteByPrimaryKey((problem.getId()));

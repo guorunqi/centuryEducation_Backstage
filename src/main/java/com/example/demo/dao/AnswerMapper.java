@@ -3,6 +3,8 @@ package com.example.demo.dao;
 import com.example.demo.domain.Answer;
 import com.example.demo.domain.AnswerExample;
 import java.util.List;
+
+import com.example.demo.domain.AnswerRate;
 import org.apache.ibatis.annotations.Param;
 
 public interface AnswerMapper {
@@ -17,6 +19,8 @@ public interface AnswerMapper {
     int insertSelective(Answer record);
 
     List<Answer> selectByExample(AnswerExample example);
+
+    List<AnswerRate> selectSelectionRate(@Param("problemId")String problemId,@Param("projectOrgId")String projectOrgId);
 
     Answer selectByPrimaryKey(String id);
 
