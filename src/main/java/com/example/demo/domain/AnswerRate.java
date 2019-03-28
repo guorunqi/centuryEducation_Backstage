@@ -9,14 +9,24 @@ public class AnswerRate {
 
     private String content;
 
-    private Double selectionRate;
+    private String selection_rate;
 
-    public Double getSelectionRate() {
-        return selectionRate;
+    private String result_id;
+
+    public String getResult_id() {
+        return result_id;
     }
 
-    public void setSelectionRate(Double selectionRate) {
-        this.selectionRate = selectionRate;
+    public void setResult_id(String result_id) {
+        this.result_id = result_id;
+    }
+
+    public String getSelection_rate() {
+        return selection_rate;
+    }
+
+    public void setSelection_rate(String selection_rate) {
+        this.selection_rate = selection_rate;
     }
 
     public String getId() {

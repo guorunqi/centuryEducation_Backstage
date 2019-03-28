@@ -8,11 +8,6 @@
     <result column="content" property="content" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="BaseResultRetaMap" type="com.example.demo.domain.AnswerRate" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="problem_id" property="problemId" jdbcType="VARCHAR" />
-    <result column="code" property="code" jdbcType="VARCHAR" />
-    <result column="content" property="content"  jdbcType="VARCHAR" />
-    <result column="selectionRate" property="selectionRate" jdbcType="FLOAT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -95,9 +90,9 @@
     from answer
     where id = #{id,jdbcType=VARCHAR}
   </select>
-  <select id="selectSelectionRate" resultMap="BaseResultRetaMap" parameterType="java.lang.String" >
-    select answer.*,answer_result.selection_rate,answer_result.project_org_id from answer,answer_result
-where answer.id = answer_result.answer_id
+  <select id="selectSelectionRate"  parameterType="java.lang.String" resultType="com.example.demo.domain.AnswerRate" >
+    select answer.*,answer_result.id as result_id,cast(answer_result.selection_rate as char) AS selection_rate,answer_result.project_org_id from answer,answer_result
+    where answer.id = answer_result.answer_id
     <if test="problemId != null" >
     and answer.problem_id = #{problemId,jdbcType=VARCHAR}
     </if>

@@ -22,8 +22,7 @@ private AnswerMapper answerMapper;
         return answerMapper.selectByExample(answerExample);
     }
     public List<AnswerRate> selectSelectionRate(String problemId, String projectOrgId ){
-        List<AnswerRate> s = answerMapper.selectSelectionRate(problemId,projectOrgId);
-        return s;
+        return answerMapper.selectSelectionRate(problemId,projectOrgId);
     }
 
     public int updateByPrimaryKey(Answer answer){
