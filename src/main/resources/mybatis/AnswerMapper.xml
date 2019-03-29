@@ -7,8 +7,6 @@
     <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="content" property="content" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="BaseResultRetaMap" type="com.example.demo.domain.AnswerRate" >
-  </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -91,13 +89,17 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
   <select id="selectSelectionRate"  parameterType="java.lang.String" resultType="com.example.demo.domain.AnswerRate" >
-    select answer.*,answer_result.id as result_id,cast(answer_result.selection_rate as char) AS selection_rate,answer_result.project_org_id from answer,answer_result
-    where answer.id = answer_result.answer_id
+    select answer.*,result.id as result_id,cast(result.selection_rate as char) AS selection_rate,result.project_org_id
+    from answer
+    LEFT JOIN (select * from answer_result
+    <if test="projectOrgId != null" >
+      where  answer_result.project_org_id = #{projectOrgId,jdbcType=VARCHAR}
+    </if>
+    ) as result
+    on answer.id = result.answer_id
+    where 1 = 1
     <if test="problemId != null" >
     and answer.problem_id = #{problemId,jdbcType=VARCHAR}
-    </if>
-    <if test="projectOrgId != null" >
-    and answer_result.project_org_id = #{projectOrgId,jdbcType=VARCHAR}
     </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
