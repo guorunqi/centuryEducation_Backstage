@@ -187,7 +187,7 @@ public class QuestionnaireManagementController {
         Map map = (Map) JSON.parse(jsonString);
         try {
             AnswerResult answerResult=JSONObject.parseObject(jsonString,AnswerResult.class);
-            if("".equals(answerResult.getId())){
+            if("".equals(answerResult.getId()) || answerResult.getId() == null){
                 answerResult.setId(CommonUtil.getPrimaryKey());
                 int i = answerResultService.insert(answerResult);
             }else{
