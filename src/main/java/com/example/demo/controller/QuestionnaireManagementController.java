@@ -156,10 +156,10 @@ public class QuestionnaireManagementController {
         }
         return controllerReturn;
     }
-/*
+
     @ResponseBody
-    @RequestMapping(value = "/LoadAnswer",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
-    public ControllerReturn LoadAnswer(@RequestBody String data){
+    @RequestMapping(value = "/LoadAnswer1",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
+    public ControllerReturn LoadAnswer1(@RequestBody String data){
         ControllerReturn controllerReturn = new ControllerReturn();
         String jsonString= JSONObject.parseObject(data).get("data").toString();
         Map map = (Map) JSON.parse(jsonString);
@@ -168,11 +168,6 @@ public class QuestionnaireManagementController {
             AnswerExample answerExample = new AnswerExample();
                           answerExample.or().andProblemIdEqualTo(problem.getId());
             List<Answer> AnswerLisst = answerService.selectByExample(answerExample);
-            if(AnswerLisst.size()>0){
-                for( Answer Answer:AnswerLisst){
-                    answerService.selectSelectionRate(Answer.getId(),);
-                }
-            }
             controllerReturn.setData(AnswerLisst);
             controllerReturn.setCode("true");
             controllerReturn.setMessage("保存成功");
@@ -182,7 +177,7 @@ public class QuestionnaireManagementController {
         }
         return controllerReturn;
     }
-*/
+
 
     @ResponseBody
     @RequestMapping(value = "/SaveAnswerResult",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
