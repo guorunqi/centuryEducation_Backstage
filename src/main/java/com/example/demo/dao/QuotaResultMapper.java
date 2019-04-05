@@ -3,6 +3,8 @@ package com.example.demo.dao;
 import com.example.demo.domain.QuotaResult;
 import com.example.demo.domain.QuotaResultExample;
 import com.example.demo.domain.QuotaResultWithBLOBs;
+
+import java.util.HashMap;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -34,4 +36,6 @@ public interface QuotaResultMapper {
     int updateByPrimaryKeyWithBLOBs(QuotaResultWithBLOBs record);
 
     int updateByPrimaryKey(QuotaResult record);
+
+    List<HashMap> queryQuotaResultByAssessmentIdAndProjectOrgId(@Param("assessmentId") String assessmentId,@Param("projectOrgId") String projectOrgId);
 }

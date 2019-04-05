@@ -310,4 +310,25 @@
       expert_id = #{expertId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="queryQuotaResultByAssessmentIdAndProjectOrgId" resultType="java.util.HashMap" parameterType="java.lang.String" >
+    select *
+    from
+      (select q.id,
+              q.p_id,
+              q.weight
+      from quota q
+      WHERE q.assessment_id=#{assessmentId,jdbcType=VARCHAR}) qt
+      LEFT JOIN
+      (select qr.id qrId,
+              qr.quota_id,
+              qr.score,
+              qr.project_org_id,
+              o.`name`
+      from quota_result qr
+      LEFT JOIN project_org po on qr.project_org_id=po.id
+      LEFT JOIN organization o on po.org_id=o.id
+      where project_org_id=#{projectOrgId,jdbcType=VARCHAR}
+      ) qrt
+      on qt.id=qrt.quota_id
+  </select>
 </mapper>

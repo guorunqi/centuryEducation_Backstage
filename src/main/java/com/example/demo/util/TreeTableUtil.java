@@ -5,6 +5,7 @@ import com.example.demo.domain.PolicyDocumentEntry;
 import com.example.demo.domain.Quota;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -93,5 +94,19 @@ public class TreeTableUtil {
             }
         }
         return null;
+    }
+    public List<TreeTablePojo> HashMapToTree(List<HashMap> list){
+        List<TreeTablePojo> pojos=new ArrayList<TreeTablePojo>();
+        for(HashMap map:list){
+            TreeTablePojo tree =new TreeTablePojo();
+            tree.setId(map.get("id").toString());
+            tree.setPid(map.get("pId").toString());
+            tree.setName(map.get("qrId").toString());
+            tree.setExped1(map.get("weight").toString());
+            tree.setExped2(map.get("score").toString());
+            tree.setChildren(new ArrayList<TreeTablePojo>());
+            pojos.add(tree);
+        }
+        return pojos;
     }
 }

@@ -66,7 +66,7 @@ public class QuotaController {
             if(StringUtils.isBlank(quota.getpId())){
                 list=quotaService.queryTopQuotaByAssessmentId(quota.getAssessmentId());
             }else{
-                list=quotaService.queryNoTopQuotaByAssessmentId(quota.getAssessmentId(),quota.getpId());
+                list=quotaService.queryNoTopQuotaByAssessmentId(quota.getAssessmentId(),quota.getpId(),quota.getId());
             }
             if(list!=null) {
                 for (Quota q : list) {

@@ -77,11 +77,11 @@ public class QuotaService {
             return null;
         }
     }
-    public List<Quota> queryNoTopQuotaByAssessmentId(String assessmentId,String pid){
+    public List<Quota> queryNoTopQuotaByAssessmentId(String assessmentId,String pid,String id){
         try {
             if(!StringUtils.isBlank(assessmentId)&&!StringUtils.isBlank(pid)){
                 QuotaExample quotaExample=new QuotaExample();
-                quotaExample.or().andPIdEqualTo(pid).andAssessmentIdEqualTo(assessmentId);
+                quotaExample.or().andPIdEqualTo(pid).andAssessmentIdEqualTo(assessmentId).andIdNotEqualTo(id);
                 return quotaMapper.selectByExample(quotaExample);
             }else {
                 return null;
