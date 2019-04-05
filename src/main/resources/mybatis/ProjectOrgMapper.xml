@@ -179,6 +179,7 @@
   </select>
   <select id="queryProjectOrgByProjectIDAndQuotaID" resultType="java.util.HashMap" parameterType="java.lang.String">
     select
+             a1.projectOrg projectOrgId,
 			 a2.id id,
 			 a1.orgId orgId,
 			 a1.orgName orgName,
@@ -187,7 +188,8 @@
     FROM
     (select p.id id,
                     p.org_id orgId,
-                    o.name orgName
+                    o.name orgName,
+                    p.id projectOrg
     from project_org p
     LEFT JOIN organization o on p.org_id=o.id
     where p.pro_id=#{projectID,jdbcType=VARCHAR}) a1
