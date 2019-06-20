@@ -2,9 +2,11 @@ package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.demo.domain.AssessmentResult;
 import com.example.demo.domain.ControllerReturn;
 import com.example.demo.domain.QuotaResult;
 import com.example.demo.domain.QuotaResultWithBLOBs;
+import com.example.demo.service.AssessmentResultService;
 import com.example.demo.service.QuotaResultService;
 import com.example.demo.util.TreeTablePojo;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +26,8 @@ import java.util.List;
 public class QuotaResultController {
     @Autowired
     private QuotaResultService quotaResultService;
+    @Autowired
+    private AssessmentResultService assessmentResultService;
     @ResponseBody
     @RequestMapping(value = "/finalScoring",method = RequestMethod.POST,produces="application/json;charset=UTF-8")
     public ControllerReturn finalScoring(@RequestBody String data){
@@ -33,14 +37,31 @@ public class QuotaResultController {
             String assessmentId= JSONObject.parseObject(data).get("assessmentId").toString();
             String projectOrgId= JSONObject.parseObject(data).get("projectOrgId").toString();
             //String scoringType= JSONObject.parseObject(data).get("scoringType").toString();
-            List<TreeTablePojo> list=quotaResultService.queryQuotaResultTreeTable(assessmentId,projectOrgId);
-            String value=quotaResultService.verificationTreeTablePojo(list);
-            if(StringUtils.isBlank(value)){
-                float number=quotaResultService.calculationNumber(list,0);
+            if(!StringUtils.isBlank(assessmentId)&&!StringUtils.isBlank(projectOrgId)){
+                List<TreeTablePojo> list=quotaResultService.queryQuotaResultTreeTable(assessmentId,projectOrgId);
+                String value=quotaResultService.verificationTreeTablePojo(list);
+                if(StringUtils.isBlank(value)){
+                    float number=quotaResultService.calculationNumber(list,0);
+                    List<AssessmentResult> assessmentResults=assessmentResultService.queryAssessmentResultByAssessmentIdAndProjectOrgId(assessmentId,projectOrgId);
+                    AssessmentResult assessmentResult;
+                    if(assessmentResults.size()>0){
+                        assessmentResult=assessmentResults.get(0);
+                    }else{
+                        assessmentResult=new AssessmentResult();
+                        assessmentResult.setAssessmentId(assessmentId);
+                        assessmentResult.setProjectOrgId(projectOrgId);
+                    }
+                    assessmentResult.setTotalScore(number);
+                    assessmentResultService.saveAssessmentResult(assessmentResult);
+                }else{
+                    controllerReturn.setCode("false");
+                    controllerReturn.setMessage(value);
+                }
             }else{
                 controllerReturn.setCode("false");
-                controllerReturn.setMessage(value);
+                controllerReturn.setMessage("参数不正确");
             }
+
         }catch (Exception e){
             controllerReturn.setCode("false");
             controllerReturn.setMessage(e.toString());

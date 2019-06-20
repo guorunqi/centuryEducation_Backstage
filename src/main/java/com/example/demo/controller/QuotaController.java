@@ -72,7 +72,9 @@ public class QuotaController {
                 for (Quota q : list) {
                     if (q.getWeight() == null || q.getWeight().equals("")) {
                         number += 0;
-                    } else {
+                    } else if(q.getId().equals(quota.getId())){
+                        number += 0;
+                    }else {
                         number += q.getWeight();
                     }
                 }
@@ -135,6 +137,7 @@ public class QuotaController {
                 TreeTableUtil treeTableUtil=new TreeTableUtil();
                 List<TreeTablePojo> treeTablePojos=treeTableUtil.QuotaToTree(list);
                 treeTablePojos=treeTableUtil.getTree(treeTablePojos);
+                treeTablePojos=treeTableUtil.sortTreeTablePojos(treeTablePojos);
                 controllerReturn.setCode("true");
                 controllerReturn.setData(treeTablePojos);
             }else{

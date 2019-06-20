@@ -7,6 +7,8 @@ import com.example.demo.domain.Quota;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by weishouhao on 2019/1/22.
@@ -108,5 +110,36 @@ public class TreeTableUtil {
             pojos.add(tree);
         }
         return pojos;
+    }
+    public List<TreeTablePojo> sortTreeTablePojos(List<TreeTablePojo> list){
+        if(list!=null){
+            for(int i=0;i<list.size();i++){
+                if(list.size()>1) {
+                    for (int j = i + 1; j < list.size(); j++) {
+                        TreeTablePojo p1 = list.get(i);
+                        TreeTablePojo p2 = list.get(j);
+                        int p1Num = Integer.valueOf(this.getNumbers(p1.getName()));
+                        int p2Num = Integer.valueOf(this.getNumbers(p2.getName()));
+                        if (p2Num < p1Num) {
+                            list.add(i, p2);
+                            list.add(j, p1);
+                            list.remove(i + 1);
+                            list.remove(j + 1);
+                        }
+                    }
+                }
+                list.get(i).setChildren(this.sortTreeTablePojos(list.get(i).getChildren()));
+            }
+        }
+        return list;
+    }
+    //截取数字
+    public String getNumbers(String content) {
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(content);
+        while (matcher.find()) {
+            return matcher.group(0);
+        }
+        return "0";
     }
 }
